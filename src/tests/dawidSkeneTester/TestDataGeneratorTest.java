@@ -38,7 +38,7 @@ public class TestDataGeneratorTest extends TestCase {
 	 */
 	public void testGenerateCategoryNames() {
 		System.out.println("--------AUTOMATIC CATEGORY GENERATION--------");
-		TestDataGenerator fixture = new TestDataGenerator();
+		TestDataGenerator fixture = TestDataGenerator.getInstance();
 		int categoryCount = 10;
 		ArrayList<String> result = fixture.generateCategoryNames(categoryCount);
 		System.out.println(result);
@@ -50,7 +50,7 @@ public class TestDataGeneratorTest extends TestCase {
 	public void testGenerateTestObjectsWithEqualPercentage() {
 		
 		System.out.println("--------OBJECT GENERATION WITH AUTO-GENERATED CATEGORIES--------");
-		TestDataGenerator fixture = new TestDataGenerator();
+		TestDataGenerator fixture = TestDataGenerator.getInstance();
 		int objectCount = 10000;
 		int categoryCount = 4;
 		TestObjectCollection result = fixture.generateTestObjects(objectCount,
@@ -76,7 +76,7 @@ public class TestDataGeneratorTest extends TestCase {
 	public void testGenerateTestObjectsWithUnequalPercentage() {
 
 		System.out.println("--------OBJECT GENERATION WITH UNEQUALLY OCCURING CATEGORIES--------");
-		TestDataGenerator fixture = new TestDataGenerator();
+		TestDataGenerator fixture = TestDataGenerator.getInstance();
 		int objectCount = 5000;
 		Map<String, Double> categories = new HashMap<String, Double>();
 		categories.put("Main category (0.6)",new Double(0.6));

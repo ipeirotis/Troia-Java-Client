@@ -66,4 +66,19 @@ public class TestDataGenerator {
 		}
 		return categories;
 	}
+	
+	
+	
+	
+	
+	
+	public static TestDataGenerator getInstance(){
+		return instance;
+	}
+	
+	private static TestDataGenerator instance = new TestDataGenerator();
+	
+	private TestDataGenerator(){
+		
+	}
 }

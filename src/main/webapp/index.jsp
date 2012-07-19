@@ -17,11 +17,11 @@
 	<form name="testForm" action="resultDisplay.jsp" method="post">
 	URL address of DSaS service : <input type="text" name="url" value="http://localhost:8080/GetAnotherLabel/rest/" /><br />
 	Identifier of this request : <input type="text" name="requestId" value="TestRequest" /><br />
-	Number of workers in simulation : <input type="text" name="workersCount" value="3000"/><br />
-	Number of object for labeling in simulation : <input type="text" name="objectsCount" value="50000"/><br />
+	Number of workers in simulation : <input type="text" name="workersCount" value="30"/><br />
+	Number of object for labeling in simulation : <input type="text" name="objectsCount" value="50"/><br />
 	Ratio of gold labels in simulation : <input type="text" name="goldRatio" value="0"/><br />
 	Number of iterations to perform : <input type="text" name="iterations" value="100000"/><br />
-	Categories used in testing (separated  by ";") : <input type="text" name="categories" value="YES;NO"/><br />
+	Number of categories : <input type="text" name="categories" value="10"/><br />
 	<input type="hidden" name="actionType" value="Stress test" /> 
 	<input type="submit" value="Start test" />
 	</form>

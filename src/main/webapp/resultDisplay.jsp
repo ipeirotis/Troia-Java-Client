@@ -42,11 +42,17 @@
 
 
 <%!DawidSkeneRequest dawidSkene;
-	DSaSStressTest dTest;%>
-
+	TestData data = new TestData();
+	TestDataGenerator generator = TestDataGenerator.getInstance();
+	Map<String,String> majorityVotes;%>
 <%
+	int categoryCount = request.getParameter("categories");
+	//Create request
 	dawidSkene = new DawidSkeneRequest(request.getParameter("url"),
 			request.getParameter("requestId"), 0);
+
+	data.setCategories(CategoryFactory.getInstance().createCategories(generator.generateCategoryNames(categoryCount)));
+	
 %>
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">

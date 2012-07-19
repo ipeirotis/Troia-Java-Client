@@ -1,5 +1,6 @@
 package main.com.dawidSkeneClient;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
@@ -12,8 +13,8 @@ public class CategoryFactory {
 	 * @param labelNames Names of labels
 	 * @return labels with given names and default misclassification costs
 	 */
-	public HashMap<String,Category> createCategories(Collection<String> labelNames){
-		HashMap<String,Category> labels=new HashMap<String,Category>();
+	public Collection<Category> createCategories(Collection<String> labelNames){
+		Collection<Category> labels=new ArrayList<Category>();
 		for (String labelName : labelNames) {
 			Category l = new Category(labelName);
 			for (String otherLabel : labelNames) {
@@ -21,16 +22,16 @@ public class CategoryFactory {
 					l.setMisclassificationCost(otherLabel, Category.DEFAULT_MISCLASSIFICATION_COST);
 				}
 			}
-			labels.put(l.getName(),l);
+			labels.add(l);
 		}
 		return labels;
 	}
 	
-	public HashMap<String,Category> createCategories(Collection<String> labelNames,Map<String,Double>priorities,Map<String,Map<String,Double>> misclassificationMatrix){
-		HashMap<String,Category> labels=new HashMap<String,Category>();
+	public Collection<Category> createCategories(Collection<String> labelNames,Map<String,Double>priorities,Map<String,Map<String,Double>> misclassificationMatrix){
+		Collection<Category> labels=new ArrayList<Category>();
 		for (String labelName : labelNames) {
 			Category l = new Category(labelName,priorities.get(labelName),misclassificationMatrix.get(labelName));
-			labels.put(l.getName(),l);
+			labels.add(l);
 		}
 		return labels;
 	}
