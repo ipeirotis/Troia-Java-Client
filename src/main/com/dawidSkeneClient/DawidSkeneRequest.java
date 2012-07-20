@@ -66,10 +66,12 @@ public class DawidSkeneRequest {
 	}
 
 	/**
-	 * Restets DawidSkene model
+	 * Restets DawidSkene model, in other words removes request with id of one
+	 * that called this method from database.
 	 * 
-	 * @return
+	 * @return Information about success or failue of operation
 	 * @throws IOException
+	 *             Exception is thrown if connection to DSaS failed
 	 */
 	public String reset() throws IOException {
 		Map<String, String> params = new HashMap<String, String>();
@@ -82,6 +84,7 @@ public class DawidSkeneRequest {
 	 * 
 	 * @return True if DSaS contains request with id as this one
 	 * @throws IOException
+	 *             Exception is thrown if connection to DSaS failed
 	 */
 	public boolean exists() throws IOException {
 		Map<String, String> params = new HashMap<String, String>();
@@ -91,321 +94,329 @@ public class DawidSkeneRequest {
 	}
 
 	/**
-	 * Adds categories to request.
+	 * Uploads categories to data model of this request.
 	 * 
 	 * @param categories
-	 *            Collection of categories
-	 * @return
+	 *            Collection of categories that will be uploaded.
+	 * @return String with information about category count and their JSONified
+	 *         form.
+	 * @throws IOException
+	 *             Exception is thrown if connection to DSaS failed
 	 */
-	public String loadCategories(Collection<Category> categories) {
+	public String loadCategories(Collection<Category> categories)
+			throws IOException {
 		Map<String, String> params = new HashMap<String, String>();
 		params.put("id", this.requestId);
 		params.put("categories", new Gson().toJson(categories).toString());
-		try {
-			return this.makePostRequest("loadCategories", params);
-		} catch (IOException e) {
-			String error = "Unable to load categories : " + e.getMessage();
-			logger.error(error);
-			return "error";
-		}
+		return this.makePostRequest("loadCategories", params);
+
 	}
 
 	/**
-	 * Adds misclassification costs to requests
+	 * Uploads misclassification costs to data model of this request.
 	 * 
 	 * @param costs
-	 * @return
+	 *            Collection of costs that will be uploaded.
+	 * @return String with information about number of misclassification costs
+	 *         added.
+	 * @throws IOException
+	 *             Exception is thrown if connection to DSaS failed
 	 */
 	public String loadMisclassificationCosts(
-			Collection<MisclassificationCost> costs) {
+			Collection<MisclassificationCost> costs) throws IOException {
 		Map<String, String> params = new HashMap<String, String>();
 		params.put("id", this.requestId);
 		params.put("costs", new Gson().toJson(costs).toString());
-		try {
-			return this.makePostRequest("loadCosts", params);
-		} catch (IOException e) {
-			String error = "Unable to load misclassification costs : "
-					+ e.getMessage();
-			logger.error(error);
-			return "error";
-		}
+		return this.makePostRequest("loadCosts", params);
+
 	}
 
 	/**
-	 * Adds a single label to request
+	 * Uploads a single worker assigned label to data model of this request.
 	 * 
 	 * @param label
-	 *            New label
-	 * @return
+	 *            Label thats going to be uploaded.
+	 * @return String describing added label.
+	 * @throws IOException
+	 *             Exception is thrown if connection to DSaS failed
 	 */
-	public String loadLabel(Label label) {
+	public String loadLabel(Label label) throws IOException {
 		Map<String, String> params = new HashMap<String, String>();
 		params.put("id", this.requestId);
 		params.put("data", new Gson().toJson(label).toString());
-		try {
-			return this.makePostRequest("loadWorkerAssignedLabel", params);
-		} catch (IOException e) {
-			String error = "Unable to load label : " + e.getMessage();
-			logger.error(error);
-			return "error";
-		}
+		return this.makePostRequest("loadWorkerAssignedLabel", params);
 	}
 
 	/**
-	 * Adds a collection of labels to request
+	 * Uploads a collection of labels to data model of this request.
 	 * 
 	 * @param labels
-	 *            Collection of labels
-	 * @return
+	 *            Collection of labels that will be uploaded
+	 * @return String describing number of labels added.
+	 * @throws IOException
+	 *             Exception is thrown if connection to DSaS failed
 	 */
-	public String loadLabels(Collection<Label> labels) {
+	public String loadLabels(Collection<Label> labels) throws IOException {
 		Map<String, String> params = new HashMap<String, String>();
 		params.put("id", this.requestId);
 		params.put("data", new Gson().toJson(labels).toString());
-		try {
-			return this.makePostRequest("loadWorkerAssignedLabels", params);
-		} catch (IOException e) {
-			String error = "Unable to load labels : " + e.getMessage();
-			logger.error(error);
-			return "error";
-		}
+		return this.makePostRequest("loadWorkerAssignedLabels", params);
+
 	}
 
 	/**
-	 * Adds a single gold label to request
+	 * Uploads a single gold label to data model of this request.
 	 * 
 	 * @param label
-	 *            New gold label
-	 * @return
+	 *            Gold label that will be uploaded
+	 * @return String describing added label.
+	 * @throws IOException
+	 *             Exception is thrown if connection to DSaS failed
 	 */
-	public String loadGoldLabel(GoldLabel label) {
+	public String loadGoldLabel(GoldLabel label) throws IOException {
 		Map<String, String> params = new HashMap<String, String>();
 		params.put("id", this.requestId);
 		params.put("data", new Gson().toJson(label).toString());
-		try {
-			return this.makePostRequest("loadGoldLabel", params);
-		} catch (IOException e) {
-			String error = "Unable to load label : " + e.getMessage();
-			logger.error(error);
-			return "error";
-		}
+		return this.makePostRequest("loadGoldLabel", params);
 	}
 
 	/**
-	 * Adds a collection of gold labels to request
+	 * Uploads a collection of gold labels to data model of this request.
 	 * 
 	 * @param labels
-	 *            New gold labels
-	 * @return
+	 *            Collection of gold labels that will be uploaded.
+	 * @return String describing number of labels added.
+	 * @throws IOException
+	 *             Exception is thrown if connection to DSaS failed
 	 */
-	public String loadGoldLabels(Collection<GoldLabel> labels) {
+	public String loadGoldLabels(Collection<GoldLabel> labels)
+			throws IOException {
 		Map<String, String> params = new HashMap<String, String>();
 		params.put("id", this.requestId);
 		params.put("data", new Gson().toJson(labels).toString());
-		try {
-			return this.makePostRequest("loadGoldLabels", params);
-		} catch (IOException e) {
-			String error = "Unable to load label : " + e.getMessage();
-			logger.error(error);
-			return "error";
-		}
+		return this.makePostRequest("loadGoldLabels", params);
 	}
 
 	/**
-	 * Computes majority vote for object of given name
+	 * Computes majority vote for object with name given as parameter.
 	 * 
 	 * @param objectName
 	 *            Name of object for with majority vote will be computed
-	 * @return
+	 * @return Name of category with highest probability of fitting this object.
+	 * @throws IOException
+	 *             Exception is thrown if connection to DSaS failed
 	 */
-	public Map<String,String>  majorityVote(String objectName) {
+	public String majorityVote(String objectName) throws IOException {
 		Map<String, String> params = new HashMap<String, String>();
 		params.put("id", this.requestId);
 		params.put("objectName", objectName);
-		try {
-			String response = this.makeGetRequest("majorityVotes", params);
-			return new Gson().fromJson(response,
-					new TypeToken<Map<String,String>>() {
-					}.getType());
-		} catch (IOException e) {
-			String error = "Unable to execute majority vote : "
-					+ e.getMessage();
-			logger.error(error);
-			return null;
-		}
+		return this.makeGetRequest("majorityVotes", params);
 	}
 
 	/**
-	 * Computes majority vote for objects with given names
+	 * Computes majority vote for group of objects with names included in
+	 * collection that's given as a parameter.
 	 * 
 	 * @param objects
 	 *            Collection of names of object for with majority vote will be
-	 *            executed
-	 * @return
+	 *            calculated.
+	 * @return Map that assigns name of category to object name.
+	 * @throws IOException
+	 *             Exception is thrown if connection to DSaS failed
 	 */
-	public Map<String,String> majorityVotes(Collection<String> objects) {
+	public Map<String, String> majorityVotes(Collection<String> objects)
+			throws IOException {
 		Map<String, String> params = new HashMap<String, String>();
 		params.put("id", this.requestId);
 		params.put("objects", new Gson().toJson(objects).toString());
-		try {
-			String response = this.makePostRequest("majorityVotes", params);
-			return new Gson().fromJson(response,
-					new TypeToken<Map<String,String>>() {
-					}.getType());
-		} catch (IOException e) {
-			String error = "Unable to execute majority vote : "
-					+ e.getMessage();
-			logger.error(error);
-			return null;
-		}
+		String response = this.makePostRequest("majorityVotes", params);
+		return new Gson().fromJson(response,
+				new TypeToken<Map<String, String>>() {
+				}.getType());
+
 	}
 
 	/**
-	 * Computes majority vote for all objects in request.
+	 * Computes majority vote for all objects held in request data model.
 	 * 
-	 * @return
+	 * @return Map that assigns name of category to object name.
+	 * @throws IOException
+	 *             Exception is thrown if connection to DSaS failed
 	 */
-	public Map<String, String> majorityVotes() {
+	public Map<String, String> majorityVotes() throws IOException {
 		Map<String, String> params = new HashMap<String, String>();
 		params.put("id", this.requestId);
-		try {
-			String response = this.makeGetRequest("majorityVotes", params);
-			return new Gson().fromJson(response,
-					new TypeToken<Map<String,String>>() {
+		String response = this.makeGetRequest("majorityVotes", params);
+		return new Gson().fromJson(response,
+				new TypeToken<Map<String, String>>() {
 				}.getType());
-		} catch (IOException e) {
-			String error = "Unable to execute majority vote : "
-					+ e.getMessage();
-			logger.error(error);
-			return null;
-		}
+
 	}
 
 	/**
-	 * Computes class probs object
+	 * Computes category probabilities for object with given name.
+	 * 
+	 * @param objectName
+	 *            Object for with probabilities will be computed.
+	 * @return Map that associates category name with it probability.
+	 * @throws IOException
+	 *             Exception is thrown if connection to DSaS failed
+	 */
+	public Map<String, Double> objectProb(String objectName) throws IOException {
+		Map<String, String> params = new HashMap<String, String>();
+		params.put("id", this.requestId);
+		params.put("object", objectName);
+		String response = this.makeGetRequest("objectProb", params);
+		return new Gson().fromJson(response,
+				new TypeToken<Map<String, Double>>() {
+				}.getType());
+
+	}
+
+	/**
+	 * Calculates object probabilities and returns them only if their entropy is
+	 * equal or above level given as a parameter. If entropy is smaller then
+	 * parameter this function returns empty map.
+	 * 
+	 * @param object
+	 *            Object for with probabilities will be computed.
+	 * @param entropy
+	 *            Entropy level below with probabilities will not be calculated
+	 * @return Map that associates category name with it probability.
+	 * @throws IOException
+	 *             Exception is thrown if connection to DSaS failed
+	 */
+	public Map<String, Double> objectProb(String object, double entropy)
+			throws IOException {
+		Map<String, String> params = new HashMap<String, String>();
+		params.put("id", this.requestId);
+		params.put("entropy", String.valueOf(entropy));
+		String response = this.makePostRequest("objectProbs", params);
+		return new Gson().fromJson(response,
+				new TypeToken<Map<String, Map<String, Double>>>() {
+				}.getType());
+
+	}
+
+	/**
+	 * Computes category probabilities for group of objects with names included
+	 * in collection that's given as a parameter.
 	 * 
 	 * @param objects
-	 * @return
+	 *            Collection of names of object for with probabilites will be
+	 *            calculated
+	 * @return Map that associates object names with their probability maps
+	 * @throws IOException
+	 *             Exception is thrown if connection to DSaS failed
 	 */
 	public Map<String, Map<String, Double>> objectProbs(
-			Collection<String> objects) {
+			Collection<String> objects) throws IOException {
 		Map<String, String> params = new HashMap<String, String>();
 		params.put("id", this.requestId);
 		params.put("objects", new Gson().toJson(objects).toString());
-		try {
-			String response = this.makePostRequest("objectProbs", params);
-			return new Gson().fromJson(response,
-					new TypeToken<Map<String, Map<String, Double>>>() {
-					}.getType());
-		} catch (IOException e) {
-			String error = "Unable to execute object probs : " + e.getMessage();
-			logger.error(error);
-			return null;
-		}
-	}
-	
-	public Map<String,Double> objectProbs(String object,double entropy){
-		Map<String, String> params = new HashMap<String, String>();
-		params.put("id", this.requestId);
-		params.put("entropy",String.valueOf(entropy));
-		try {
-			String response = this.makePostRequest("objectProbs", params);
-			return new Gson().fromJson(response,
-					new TypeToken<Map<String, Map<String, Double>>>() {
-					}.getType());
-		} catch (IOException e) {
-			String error = "Unable to execute object probs : " + e.getMessage();
-			logger.error(error);
-			return null;
-		}
-	}
-	
-	public Map<String,Double> objectProb(String objectName){
-		Map<String, String> params = new HashMap<String, String>();
-		params.put("id", this.requestId);
-		params.put("object",objectName);
-		try {
-			String response = this.makeGetRequest("objectProb", params);
-			return new Gson().fromJson(response,
-					new TypeToken<Map<String, Double>>() {
-					}.getType());
-		} catch (IOException e) {
-			String error = "Unable to execute object probs : " + e.getMessage();
-			logger.error(error);
-			return null;
-		}
-	}
-	
-	public String printObjectsProbs(double entropy){
-		Map<String, String> params = new HashMap<String, String>();
-		params.put("id", this.requestId);
-		params.put("entropy",String.valueOf(entropy));
-		try {
-			return this.makeGetRequest("printObjectsProbs", params);
-		} catch (IOException e) {
-			String error = "Unable to print objects probs : " + e.getMessage();
-			logger.error(error);
-			return error;
-		}
-	}
-	
-	public String computeBlocking(int iterations){
-		Map<String, String> params = new HashMap<String, String>();
-		params.put("id", this.requestId);
-		params.put("iterations",String.valueOf(iterations));
-		try {
-			return this.makeGetRequest("computeBlocking", params);
-		} catch (IOException e) {
-			String error = "Unable to execute computeBlocking : " + e.getMessage();
-			logger.error(error);
-			return error;
-		}
-	}
-	
-	public String printWorkerSummary(boolean verbose){
-		Map<String, String> params = new HashMap<String, String>();
-		params.put("id", this.requestId);
-		if(verbose){
-			params.put("verbose", "verbose");
-		}
-		try {
-			return this.makeGetRequest("printWorkerSummary", params);
-		} catch (IOException e) {
-			String error = "Unable to load label : " + e.getMessage();
-			logger.error(error);
-			return error;
-		}
+		String response = this.makePostRequest("objectProbs", params);
+		return new Gson().fromJson(response,
+				new TypeToken<Map<String, Map<String, Double>>>() {
+				}.getType());
+
 	}
 
-	public String printPriors(){
-		Map<String, String> params = new HashMap<String, String>();
-		params.put("id", this.requestId);
-		try {
-			return this.makeGetRequest("printPriors", params);
-		} catch (IOException e) {
-			String error = "Unable to load label : " + e.getMessage();
-			logger.error(error);
-			return error;
-		}
-	}
-	
-	public Map<String,Double> classPriors(){
-		Map<String, String> params = new HashMap<String, String>();
-		params.put("id", this.requestId);
-		try {
-			String response = this.makeGetRequest("objectProb", params);
-			return new Gson().fromJson(response,
-					new TypeToken<Map<String, Double>>() {
-					}.getType());
-		} catch (IOException e) {
-			String error = "Unable to get class priors : " + e.getMessage();
-			logger.error(error);
-			return null;
-		}
-	}
-	
 	/**
-	 * @return the serviceUrl
+	 * Creates String with readable representation of probabilities of the
+	 * objects that have probability distributions with entropy higher than the
+	 * given threshold.
+	 * 
+	 * @param entropy
+	 *            Object with entropy smaller then this value won't be printed
+	 *            out
+	 * @return String with object probabilities distributions formatted to human
+	 *         readable form.
+	 * @throws IOException
+	 *             Exception is thrown if connection to DSaS failed
+	 */
+	public String printObjectsProbs(double entropy) throws IOException {
+		Map<String, String> params = new HashMap<String, String>();
+		params.put("id", this.requestId);
+		params.put("entropy", String.valueOf(entropy));
+		return this.makeGetRequest("printObjectsProbs", params);
+
+	}
+
+	/**
+	 * Runs Dawid-Skene algorithm on request data and returns string that
+	 * describes how many iterations were execudet and how much time it took.
+	 * 
+	 * @param iterations
+	 *            How many Dawid-Skene iteration will be run.
+	 * @return String that describes how many Dawid-Skene algorithm iteration
+	 *         have been run.
+	 * @throws IOException
+	 *             Exception is thrown if connection to DSaS failed
+	 */
+	public String computeBlocking(int iterations) throws IOException {
+		Map<String, String> params = new HashMap<String, String>();
+		params.put("id", this.requestId);
+		params.put("iterations", String.valueOf(iterations));
+		return this.makeGetRequest("computeBlocking", params);
+
+	}
+
+	/**
+	 * Prepares String with summaries of all workers that participated in this
+	 * request. It is possible to set if summaries should be detailed or not.
+	 * 
+	 * @param verbose
+	 *            Is worker summary supposed to be detailed.
+	 * @return String with summaries of all workers from this request in
+	 *         readable format.
+	 * @throws IOException
+	 *             Exception is thrown if connection to DSaS failed
+	 */
+	public String printWorkerSummary(boolean verbose) throws IOException {
+		Map<String, String> params = new HashMap<String, String>();
+		params.put("id", this.requestId);
+		if (verbose) {
+			params.put("verbose", "verbose");
+		}
+		return this.makeGetRequest("printWorkerSummary", params);
+
+	}
+
+	/**
+	 * Creates String with priorities of all classes from this request in
+	 * readable format
+	 * 
+	 * @return Priorities of all classes from this request in readable format.
+	 * @throws IOException
+	 *             Exception is thrown if connection to DSaS failed
+	 */
+	public String printPriors() throws IOException {
+		Map<String, String> params = new HashMap<String, String>();
+		params.put("id", this.requestId);
+		return this.makeGetRequest("printPriors", params);
+
+	}
+
+	/**
+	 * Function retrieves priorities of all classes in request and puts them in
+	 * map that associates class name with it priority.
+	 * 
+	 * @return Map that associates class name with it priority.
+	 * @throws IOException
+	 *             Exception is thrown if connection to DSaS failed
+	 */
+	public Map<String, Double> classPriors() throws IOException {
+		Map<String, String> params = new HashMap<String, String>();
+		params.put("id", this.requestId);
+		String response = this.makeGetRequest("objectProb", params);
+		return new Gson().fromJson(response,
+				new TypeToken<Map<String, Double>>() {
+				}.getType());
+
+	}
+
+	/**
+	 * @return DSaS URL address
 	 */
 	public String getServiceUrl() {
 		return serviceUrl;
@@ -413,14 +424,14 @@ public class DawidSkeneRequest {
 
 	/**
 	 * @param serviceUrl
-	 *            the serviceUrl to set
+	 *            DSaS URL address
 	 */
 	public void setServiceUrl(String serviceUrl) {
 		this.serviceUrl = serviceUrl;
 	}
 
 	/**
-	 * @return the timeout
+	 * @return Timeout in milliseconds
 	 */
 	public int getTimeout() {
 		return timeout;
@@ -428,14 +439,14 @@ public class DawidSkeneRequest {
 
 	/**
 	 * @param timeout
-	 *            the timeout to set
+	 *            Timeout in milliseconds
 	 */
 	public void setTimeout(int timeout) {
 		this.timeout = timeout;
 	}
 
 	/**
-	 * @return the requestId
+	 * @return Id of this request
 	 */
 	public String getRequestId() {
 		return requestId;
@@ -443,7 +454,7 @@ public class DawidSkeneRequest {
 
 	/**
 	 * @param requestId
-	 *            the requestId to set
+	 *            Id of this request
 	 */
 	public void setRequestId(String requestId) {
 		this.requestId = requestId;
@@ -456,7 +467,7 @@ public class DawidSkeneRequest {
 	 *            Path to requested service
 	 * @param params
 	 *            Parameter map where key is parameter name and value is
-	 *            paramater value.
+	 *            parameter value.
 	 * @return Response from DSaS
 	 * @throws IOException
 	 *             Exception thrown when there are problems with connection
@@ -490,7 +501,7 @@ public class DawidSkeneRequest {
 			reader.close();
 			return buffer.toString();
 		} catch (MalformedURLException e) {
-			// TODO This should never happen URL format shoud be guaranteed by
+			// This should never happen URL format should be guaranteed by
 			// constructor
 			e.printStackTrace();
 			return "";
@@ -498,11 +509,14 @@ public class DawidSkeneRequest {
 	}
 
 	/**
-	 * Generates POST request
+	 * Generates POST request with given parameters
 	 * 
 	 * @param data
-	 * @return
+	 *            Parameter map where key is parameter name and value is
+	 *            parameter value.
+	 * @return Response from DSaS
 	 * @throws IOException
+	 *             Exception thrown when there are problems with connection
 	 */
 	private String makePostRequest(String service, Map<String, String> params)
 			throws IOException {
@@ -549,7 +563,7 @@ public class DawidSkeneRequest {
 			return inputBuffer.toString();
 
 		} catch (MalformedURLException e) {
-			// TODO This should never happen URL format shoud be guaranteed by
+			// This should never happen URL format should be guaranteed by
 			// constructor
 			e.printStackTrace();
 			return "";
@@ -557,7 +571,7 @@ public class DawidSkeneRequest {
 	}
 
 	/**
-	 * DSaS url
+	 * DSaS URL address
 	 */
 	private String serviceUrl;
 
@@ -582,6 +596,5 @@ public class DawidSkeneRequest {
 	 * Logger for this class
 	 */
 	private static Logger logger = Logger.getLogger(DawidSkeneRequest.class);
-
 
 }

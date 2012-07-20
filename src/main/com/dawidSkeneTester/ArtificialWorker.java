@@ -6,6 +6,36 @@ public class ArtificialWorker {
 
 	
 	
+	
+	
+	/**
+	 * @return Worker name
+	 */
+	public String getName() {
+		return name;
+	}
+
+	/**
+	 * @param name Worker name
+	 */
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	/**
+	 * @return Worker confusion matrix.
+	 */
+	public Map<String, Map<String, Double>> getConfusionMatrix() {
+		return confusionMatrix;
+	}
+
+	/**
+	 * @param confusionMatrix Worker confusion matrix.t
+	 */
+	public void setConfusionMatrix(Map<String, Map<String, Double>> confusionMatrix) {
+		this.confusionMatrix = confusionMatrix;
+	}
+
 	/**
 	 * Worker name
 	 */

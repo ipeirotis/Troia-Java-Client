@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+	pageEncoding="UTF-8"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -9,24 +9,26 @@
 </head>
 <body>
 	<center>
-	<font size="4">
-	Welcome to Dawid Skene as Service tester application.<br/>
-	</font>
-	Please choose test parameters
-	<br/>
-	<form name="testForm" action="resultDisplay.jsp" method="post">
-	URL address of DSaS service : <input type="text" name="url" value="http://localhost:8080/GetAnotherLabel/rest/" /><br />
-	Identifier of this request : <input type="text" name="requestId" value="TestRequest" /><br />
-	Number of workers in simulation : <input type="text" name="workersCount" value="30"/><br />
-	Number of object for labeling in simulation : <input type="text" name="objectsCount" value="50"/><br />
-	Ratio of gold labels in simulation : <input type="text" name="goldRatio" value="0"/><br />
-	Number of iterations to perform : <input type="text" name="iterations" value="100000"/><br />
-	Number of categories : <input type="text" name="categories" value="10"/><br />
-	<input type="hidden" name="actionType" value="Stress test" /> 
-	<input type="submit" value="Start test" />
-	</form>
-	
-	
+		<font size="4"> Welcome to Dawid Skene as Service tester
+			application.<br />
+		</font> Please choose test parameters <br />
+		<form name="testForm" action="resultDisplay.jsp" method="post">
+			URL address of DSaS service : <input type="text" name="url"
+				value="http://localhost:8080/GetAnotherLabel/rest/" /><br />
+			Identifier of this request : <input type="text" name="requestId"
+				value="TestRequest" /><br /> Number of workers in simulation : <input
+				type="text" name="workersCount" value="30" /><br /> Number of
+			object for labeling in simulation : <input type="text"
+				name="objectsCount" value="50" /><br /> Ratio of gold labels in
+			simulation : <input type="text" name="goldRatio" value="0" /><br />
+			Number of iterations to perform : <input type="text"
+				name="iterations" value="100000" /><br /> Number of categories : <input
+				type="text" name="categories" value="10" /><br /> <input
+				type="hidden" name="actionType" value="Stress test" /> <input
+				type="submit" value="Start test" />
+		</form>
+
+
 	</center>
 </body>
 </html>

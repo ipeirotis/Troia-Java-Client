@@ -41,11 +41,6 @@ public class ConfusionMatrix {
 	}
 
 	/**
-	 * Confusion map used for 
-	 */
-	private Map<String,Map<String,Double>> representativeConfusionMap;
-	
-	/**
 	 * Confusion map used for generating categories with noise
 	 */
 	private Map<String,Map<Double,String>> confusionMap;

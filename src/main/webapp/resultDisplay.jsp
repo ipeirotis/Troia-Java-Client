@@ -94,6 +94,28 @@
 				</tr>
 			</table>
 		</div>
+		<button onclick="togglePageElementVisibility('MajorityVotes')">
+			Request parameters</button>
+		<div id="MajorityVotes">
+			<table>
+				<%
+		   Collection<String> objects = majorityVotes.keySet();
+		   int column=0;
+		   out.print("<tr>");
+		   for(String object : objects){
+			   if(column>=5){
+				   out.print("</tr>");
+				   out.print("<tr>");
+				   column=0;
+			   }
+			   out.print("<td>");
+			   out.print(object+" : "+majorityVotes.get(object));
+			   out.print("</td>");
+		   }
+		   out.print("</tr>");
+		%>
+			</table>
+		</div>
 	</center>
 </body>
 </html>

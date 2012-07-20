@@ -134,7 +134,6 @@ public class TestObjectCollection implements Collection<String> {
 	 */
 	@Override
 	public boolean retainAll(Collection<?> c) {
-		// TODO Auto-generated method stub
 		return false;
 	}
 

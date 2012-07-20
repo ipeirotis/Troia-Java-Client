@@ -21,12 +21,7 @@ public class Category {
 	 *            Category name
 	 */
 	public Category(String name) {
-		super();
-		this.name = name;
-		this.misclassification_cost = new HashMap<String, Double>();
-		this.misclassification_cost.put(this.name,
-				DEFAULT_CORRECT_CLASSIFICATION_COST);
-		this.prior = DEFAULT_PRIORITY;
+		this(name,DEFAULT_PRIORITY,new HashMap<String, Double>());
 	}
 
 	/**
@@ -39,10 +34,7 @@ public class Category {
 	 *            by their names.
 	 */
 	public Category(String name, Map<String, Double> misclassificationCostsMap) {
-		super();
-		this.name = name;
-		this.prior = prior;
-		this.misclassification_cost = misclassificationCostsMap;
+		this(name,DEFAULT_PRIORITY,misclassificationCostsMap);
 	}
 
 	/**
