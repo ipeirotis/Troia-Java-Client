@@ -44,15 +44,61 @@
 <%!DawidSkeneRequest dawidSkene;
 	TestData data = new TestData();
 	TestDataGenerator generator = TestDataGenerator.getInstance();
-	Map<String,String> majorityVotes;%>
+	Map<String, String> majorityVotes;
+	DawidSkeneAnalyzer analyzer;%>
 <%
-	int categoryCount = request.getParameter("categories");
+	int categoryCount = Integer.parseInt(request
+			.getParameter("categories"));
+	int objectCount = Integer.parseInt(request
+			.getParameter("objectsCount"));
+	int workerCount = Integer.parseInt(request
+			.getParameter("workersCount"));
+	double minQuality = Double.parseDouble(request
+			.getParameter("minQuality"));
+	double maxQuality = Double.parseDouble(request
+			.getParameter("maxQuality"));
+	double goldRatio = Double.parseDouble(request
+			.getParameter("goldRatio"));
+	int workersPerObject = Integer.parseInt(request
+			.getParameter("workersPerObject"));
+	int iterations = Integer.parseInt(request
+			.getParameter("iterations"));
+
 	//Create request
+
 	dawidSkene = new DawidSkeneRequest(request.getParameter("url"),
 			request.getParameter("requestId"), 0);
 
-	data.setCategories(CategoryFactory.getInstance().createCategories(generator.generateCategoryNames(categoryCount)));
-	
+	Collection<String> categoryNames = generator
+			.generateCategoryNames(categoryCount);
+	TestObjectCollection testObjects = generator.generateTestObjects(
+			objectCount, categoryNames);
+	Collection<ArtificialWorker> workers = generator
+			.generateArtificialWorkers(workerCount, categoryNames,
+					minQuality, maxQuality);
+	Collection<String> workerNames = new ArrayList<String>();
+	Collection<Category> categories = CategoryFactory.getInstance()
+			.createCategories(categoryNames);
+	Collection<MisclassificationCost> msCosts = MisclassificationCostFactory
+			.getInstance().getMisclassificationCosts(categories);
+
+	for (ArtificialWorker worker : workers) {
+		workerNames.add(worker.getName());
+	}
+
+	data.setCategories(categories);
+	data.setObjectCollection(testObjects);
+	data.setGoldLabels(generator.generateGoldLabels(testObjects,
+			goldRatio));
+	data.setWorkers(workerNames);
+	data.setLabels(generator.generateLabels(workers, testObjects,
+			workersPerObject));
+	data.setMisclassificationCost(msCosts);
+
+	analyzer = new DawidSkeneAnalyzer(dawidSkene, data, iterations);
+	analyzer.execute();
+
+	majorityVotes = analyzer.getMajorityVotes();
 %>
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
@@ -94,26 +140,61 @@
 				</tr>
 			</table>
 		</div>
+		<button onclick="togglePageElementVisibility('Statistics')">
+			Statistics</button>
+		<div id="Statistics">
+			<table border="1">
+				<tr>
+
+					<td>Source labels quality</td>
+					<td>
+						<%
+							out.print(analyzer.getSourceLabelQuality());
+						%>
+					</td>
+				</tr>
+				<tr>
+
+					<td>Dawid Skene (majority vote) label quality</td>
+					<td>
+						<%
+							out.print(analyzer.getDawidSkeneLabelQuality());
+						%>
+					</td>
+				</tr>
+
+				<tr>
+
+					<td>Processing time</td>
+					<td>
+						<%
+							out.print(analyzer.getProcessingTime());
+						%>
+					</td>
+				</tr>
+			</table>
+		</div>
 		<button onclick="togglePageElementVisibility('MajorityVotes')">
-			Request parameters</button>
+			Majority vote results</button>
 		<div id="MajorityVotes">
 			<table>
 				<%
-		   Collection<String> objects = majorityVotes.keySet();
-		   int column=0;
-		   out.print("<tr>");
-		   for(String object : objects){
-			   if(column>=5){
-				   out.print("</tr>");
-				   out.print("<tr>");
-				   column=0;
-			   }
-			   out.print("<td>");
-			   out.print(object+" : "+majorityVotes.get(object));
-			   out.print("</td>");
-		   }
-		   out.print("</tr>");
-		%>
+					Collection<String> objects = majorityVotes.keySet();
+					int objectNumber = 0;
+					for (String object : objects) {
+						if (objectNumber % 5 == 0) {
+							out.print("<tr>");
+						}
+						out.print("<td>");
+						out.print(object);
+						out.print("</td>");
+						out.print("<td>");
+						out.print(majorityVotes.get(object));
+						out.print("</td>");
+
+						objectNumber++;
+					}
+				%>
 			</table>
 		</div>
 	</center>

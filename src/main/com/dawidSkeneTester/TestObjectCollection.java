@@ -5,6 +5,17 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 
+/**
+ * 
+ * @author piotr.gnys@10clouds.com
+ * This class is created because during tests we usually want to know correct 
+ * classes for all object not only for ones with gold labels. This class implements
+ * Collection interface and when treated as such it is simply a collection of class names.
+ * Thanks to that it can be used in places where normally collection of object names
+ * is sent for labeling. However this class also provides functionality
+ * that allows you to 'cheat' and ask for correct label for each object.
+ * This is useful if you want to test how close to reality are result of DSaS algorithm.  
+ */
 public class TestObjectCollection implements Collection<String> {
 
 	

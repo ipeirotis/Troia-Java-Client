@@ -1,11 +1,36 @@
 package main.com.dawidSkeneTester;
 
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * 
+ * @author piotr.gnys@10clouds.com
+ * This class represents actual confusion matrix of artificial worker.
+ */
 public class ConfusionMatrix {
 
 	
+	public ConfusionMatrix(Map<String, Map<String, Double>> confMatrix) {
+		super();
+		this.confusionMap = new HashMap<String,Map<Double,String>>();
+		Map<Double,String> limiterVector;
+		Collection<String> correctClasses = confMatrix.keySet();
+		for (String correctClass : correctClasses) {
+			Map<String,Double> confVector = confMatrix.get(correctClass);
+			Collection<String> labeledClasses = confVector.keySet();
+			limiterVector = new HashMap<Double,String>();
+			double limiter = 0;
+			for (String labeledClass : labeledClasses) {
+				double prob = confVector.get(labeledClass).doubleValue();
+				limiter+=prob;
+				if(prob!=0)	limiterVector.put(limiter,labeledClass);
+			}
+			this.confusionMap.put(correctClass, limiterVector);
+		}
+	}
+
 	/**
 	 * This function adds noises to labbeling process.
 	 * Noise is determined by confusion matrix with represents probabilities
@@ -39,6 +64,18 @@ public class ConfusionMatrix {
 	public void setConfusionMap(Map<String, Map<Double,String>> confusionMap) {
 		this.confusionMap = confusionMap;
 	}
+
+	
+	
+	/** 
+	 * @see java.lang.Object#toString()
+	 */
+	@Override
+	public String toString() {
+		return "ConfusionMatrix [confusionMap=" + confusionMap + "]";
+	}
+
+
 
 	/**
 	 * Confusion map used for generating categories with noise

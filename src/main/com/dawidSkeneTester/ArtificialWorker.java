@@ -22,19 +22,42 @@ public class ArtificialWorker {
 		this.name = name;
 	}
 
+
 	/**
-	 * @return Worker confusion matrix.
+	 * @return the confusionMatrix
 	 */
-	public Map<String, Map<String, Double>> getConfusionMatrix() {
+	public ConfusionMatrix getConfusionMatrix() {
 		return confusionMatrix;
 	}
 
 	/**
-	 * @param confusionMatrix Worker confusion matrix.t
+	 * @param confusionMatrix the confusionMatrix to set
 	 */
-	public void setConfusionMatrix(Map<String, Map<String, Double>> confusionMatrix) {
+	public void setConfusionMatrix(ConfusionMatrix confusionMatrix) {
 		this.confusionMatrix = confusionMatrix;
 	}
+	
+	/**
+	 * 
+	 * @param correctCategory Correct category of object
+	 * @return Category assigned to object by this worker
+	 */
+	public String assignCategoryToObject(String correctCategory){
+		return this.confusionMatrix.getCategoryWithNoise(correctCategory);
+	}
+
+	
+	
+	/**
+	 * @see java.lang.Object#toString()
+	 */
+	@Override
+	public String toString() {
+		return "ArtificialWorker [name=" + name + ", confusionMatrix="
+				+ confusionMatrix + "]";
+	}
+
+
 
 	/**
 	 * Worker name
@@ -45,5 +68,5 @@ public class ArtificialWorker {
 	 * Worker confusion matrix.
 	 * Confusion matrix is used to indicate what
 	 */
-	private Map<String,Map<String,Double>> confusionMatrix;
+	private ConfusionMatrix confusionMatrix;
 }

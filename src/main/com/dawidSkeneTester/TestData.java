@@ -5,6 +5,7 @@ import java.util.Collection;
 import main.com.dawidSkeneClient.Category;
 import main.com.dawidSkeneClient.GoldLabel;
 import main.com.dawidSkeneClient.Label;
+import main.com.dawidSkeneClient.MisclassificationCost;
 
 public class TestData {
 
@@ -103,6 +104,25 @@ public class TestData {
 		this.goldLabels = goldLabels;
 	}
 
+	
+	
+	/**
+	 * @return Collection of misclassification costs
+	 */
+	public Collection<MisclassificationCost> getMisclassificationCost() {
+		return misclassificationCost;
+	}
+
+	/**
+	 * @param misclassificationCost Collection of misclassification costs
+	 */
+	public void setMisclassificationCost(
+			Collection<MisclassificationCost> misclassificationCost) {
+		this.misclassificationCost = misclassificationCost;
+	}
+
+
+
 	/**
 	 * Request identifier
 	 */
@@ -132,4 +152,9 @@ public class TestData {
 	 * Collection of gold labels in request
 	 */
 	Collection<GoldLabel> goldLabels;
+	
+	/**
+	 * Collection of misclassification costs
+	 */
+	Collection<MisclassificationCost> misclassificationCost;
 }

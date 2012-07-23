@@ -5,7 +5,11 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.apache.log4j.Logger;
+
 import junit.framework.TestCase;
+import main.com.dawidSkeneClient.Label;
+import main.com.dawidSkeneTester.ArtificialWorker;
 import main.com.dawidSkeneTester.TestDataGenerator;
 import main.com.dawidSkeneTester.TestObjectCollection;
 
@@ -17,7 +21,7 @@ import main.com.dawidSkeneTester.TestObjectCollection;
  * 
  * @generatedBy CodePro at 7/17/12 1:48 PM
  * 
- * @author regule
+ * @author piotr.gnys@10clouds.com
  * 
  * @version $Revision$
  */
@@ -37,11 +41,11 @@ public class TestDataGeneratorTest extends TestCase {
 	 * Run the ArrayList<String> generateCategoryNames(int) method test
 	 */
 	public void testGenerateCategoryNames() {
-		System.out.println("--------AUTOMATIC CATEGORY GENERATION--------");
+		logger.info("--------AUTOMATIC CATEGORY GENERATION--------");
 		TestDataGenerator fixture = TestDataGenerator.getInstance();
 		int categoryCount = 10;
-		ArrayList<String> result = fixture.generateCategoryNames(categoryCount);
-		System.out.println(result);
+		Collection<String> result = fixture.generateCategoryNames(categoryCount);
+		logger.info(result);
 	}
 
 	/**
@@ -49,7 +53,7 @@ public class TestDataGeneratorTest extends TestCase {
 	 */
 	public void testGenerateTestObjectsWithEqualPercentage() {
 		
-		System.out.println("--------OBJECT GENERATION WITH AUTO-GENERATED CATEGORIES--------");
+		logger.info("--------OBJECT GENERATION WITH AUTO-GENERATED CATEGORIES--------");
 		TestDataGenerator fixture = TestDataGenerator.getInstance();
 		int objectCount = 10000;
 		int categoryCount = 4;
@@ -64,18 +68,18 @@ public class TestDataGeneratorTest extends TestCase {
 				occurences.put(category, Integer.valueOf(1));
 			}
 		}
-		System.out.println("Occurences of categories in generated objects : ");
+		logger.info("Occurences of categories in generated objects : ");
 		Collection<String> categoryNames = occurences.keySet();
 		for (String category : categoryNames) {
 			double occ = occurences.get(category).doubleValue();
 			double pr = occ/(double)objectCount;
-			System.out.println(category+" : "+occ+"("+pr+")");
+			logger.info(category+" : "+occ+"("+pr+")");
 		}
 	}
 
 	public void testGenerateTestObjectsWithUnequalPercentage() {
 
-		System.out.println("--------OBJECT GENERATION WITH UNEQUALLY OCCURING CATEGORIES--------");
+		logger.info("--------OBJECT GENERATION WITH UNEQUALLY OCCURING CATEGORIES--------");
 		TestDataGenerator fixture = TestDataGenerator.getInstance();
 		int objectCount = 5000;
 		Map<String, Double> categories = new HashMap<String, Double>();
@@ -93,15 +97,57 @@ public class TestDataGeneratorTest extends TestCase {
 				occurences.put(category, Integer.valueOf(1));
 			}
 		}
-		System.out.println("Occurences of categories in generated objects : ");
+		logger.info("Occurences of categories in generated objects : ");
 		Collection<String> categoryNames = occurences.keySet();
 		for (String category : categoryNames) {
 			double occ = occurences.get(category).doubleValue();
 			double pr = occ/(double)objectCount;
-			System.out.println(category+" : "+occ+"("+pr+")");
+			logger.info(category+" : "+occ+"("+pr+")");
 		}
-		//System.out.println(result);
 	}
+	
+	public void testCreateArtificialWorker(){
+		logger.info("--------SINGLE WORKER GENERATION--------");
+		TestDataGenerator fixture = TestDataGenerator.getInstance();
+		Collection<String> categories = fixture.generateCategoryNames(4);
+		ArtificialWorker worker = fixture.generateArtificialWorker("Worker name",0.5, categories);
+		logger.info(worker);
+	}
+	
+	public void testGenerateLabels(){
+		logger.info("--------LABELS GENERATION--------");
+		TestDataGenerator fixture = TestDataGenerator.getInstance();
+		int categoryCount = 5;
+		int objectCount = 10000;
+		int workerCount = 100;
+		double minQuality = 0;
+		double maxQuality = 0;
+		int workersPerObject = 9;
+		logger.info("Number of categories : "+categoryCount);
+		logger.info("Number of objects : "+objectCount);
+		logger.info("Number of workers : "+workerCount);
+		logger.info("Minimal worker quality : "+minQuality);
+		logger.info("Maximal worker quality : "+maxQuality);
+		Collection<String> categories = fixture.generateCategoryNames(categoryCount);
+		TestObjectCollection objects = fixture.generateTestObjects(objectCount,categories);
+		Collection<ArtificialWorker> workers = fixture.generateArtificialWorkers(workerCount, categories, minQuality, maxQuality);
+		Collection<Label> labels = fixture.generateLabels(workers, objects, workersPerObject);
+		int correctLabels = 0;
+		int totalLabels = 0;
+		double correctLabelsPercentage;
+		for (Label label : labels) {
+			//System.out.print(label);
+			if(label.getCategoryName().equalsIgnoreCase(objects.getCategory(label.getObjectName()))){
+				correctLabels++;
+			}
+			totalLabels++;
+		}
+		correctLabelsPercentage=((double)correctLabels/(double)totalLabels)*100;
+		logger.info("Correct labels percentage : "+correctLabelsPercentage);
+		
+	}
+	
+	private static Logger logger = Logger.getLogger(TestDataGeneratorTest.class);
 }
 
 /*
