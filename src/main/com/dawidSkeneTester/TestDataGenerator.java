@@ -195,7 +195,7 @@ public class TestDataGenerator {
 			int workerCount, Collection<String> categories, double minQuality,
 			double maxQuality) {
 		Collection<ArtificialWorker> workers = new ArrayList<ArtificialWorker>();
-		if (minQuality >= maxQuality)
+		if (minQuality > maxQuality)
 			minQuality = 0;
 		double qualityRange = maxQuality - minQuality;
 		for (int i = 0; i < workerCount; i++) {
@@ -223,11 +223,13 @@ public class TestDataGenerator {
 			String correctCat = objects.getCategory(object);
 			ArtificialWorker worker;
 			for (int labelsForObject = 0; labelsForObject < workersPerObject; labelsForObject++) {
+				String assignedLabel;
 				if(!workersIterator.hasNext()){
 					workersIterator = workers.iterator();
 				}
 				worker = workersIterator.next();
-				labels.add(new Label(worker.getName(),object,worker.assignCategoryToObject(correctCat)));
+				assignedLabel = worker.assignCategoryToObject(correctCat);
+				labels.add(new Label(worker.getName(),object,assignedLabel));
 			}
 		}
 		return labels;

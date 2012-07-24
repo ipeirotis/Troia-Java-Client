@@ -138,6 +138,15 @@
 						%>
 					</td>
 				</tr>
+				<tr>
+
+					<td>Gold labels ratio</td>
+					<td>
+						<%
+							out.print(goldRatio);
+						%>
+					</td>
+				</tr>
 			</table>
 		</div>
 		<button onclick="togglePageElementVisibility('Statistics')">
