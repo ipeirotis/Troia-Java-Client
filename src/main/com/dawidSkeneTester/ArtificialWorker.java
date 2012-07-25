@@ -1,6 +1,5 @@
 package main.com.dawidSkeneTester;
 
-import java.util.Map;
 
 public class ArtificialWorker {
 

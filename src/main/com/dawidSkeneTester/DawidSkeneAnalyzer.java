@@ -64,7 +64,7 @@ public class DawidSkeneAnalyzer {
 		correctLabels=0;
 		totalLabels=0;
 		for (String object : testObjects) {
-			if(this.majorityVotes.get(object).equalsIgnoreCase(testObjects.getCategory(object)));{
+			if(this.majorityVotes.get(object).equalsIgnoreCase(testObjects.getCategory(object))){
 				correctLabels++;
 			}
 			totalLabels++;

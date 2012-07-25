@@ -8,9 +8,12 @@ import java.util.Map;
 
 import org.apache.log4j.Logger;
 
-import main.com.dawidSkeneClient.DawidSkeneRequest;
+import main.com.dawidSkeneClient.Category;
+import main.com.dawidSkeneClient.CategoryFactory;
 import main.com.dawidSkeneClient.GoldLabel;
 import main.com.dawidSkeneClient.Label;
+import main.com.dawidSkeneClient.MisclassificationCost;
+import main.com.dawidSkeneClient.MisclassificationCostFactory;
 
 /**
  * 
@@ -37,7 +40,7 @@ public class TestDataGenerator {
 		for (Double percentage : percentages) {
 			totalPercentage += percentage.doubleValue();
 		}
-		if (1-totalPercentage > 0.0001) {
+		if (1 - totalPercentage > 0.0001) {
 			throw new ArithmeticException("Percentage values sum up to "
 					+ totalPercentage + " instead of 1.");
 		} else {
@@ -94,7 +97,7 @@ public class TestDataGenerator {
 		}
 		return this.generateTestObjects(objectCount, categories);
 	}
-	
+
 	public TestObjectCollection generateTestObjects(int objectCount,
 			Collection<String> categoryNames) {
 		double p = 1.0 / (double) categoryNames.size();
@@ -134,8 +137,8 @@ public class TestDataGenerator {
 	 *            Categories that exist in task executed by this worker
 	 * @return Artificial worker
 	 */
-	public ArtificialWorker generateArtificialWorker(String name, double quality,
-			Collection<String> categories) {
+	public ArtificialWorker generateArtificialWorker(String name,
+			double quality, Collection<String> categories) {
 		ArtificialWorker worker = new ArtificialWorker();
 		Map<String, Map<String, Double>> confMatrix = new HashMap<String, Map<String, Double>>();
 		Map<String, Double> confVector;
@@ -147,7 +150,7 @@ public class TestDataGenerator {
 			for (String labeledClass : categories) {
 				if (labeledClass.equalsIgnoreCase(correctClass)) {
 					confVector.put(labeledClass, quality);
-					logger.debug("Set correct label probability to "+ quality);
+					logger.debug("Set correct label probability to " + quality);
 				} else {
 					prob = Math.random() * restProb;
 					restProb -= prob;
@@ -158,7 +161,7 @@ public class TestDataGenerator {
 		}
 		worker.setName(name);
 		worker.setConfusionMatrix(new ConfusionMatrix(confMatrix));
-		logger.info("Generated artifical worker with quality "+ quality);
+		logger.info("Generated artifical worker with quality " + quality);
 		return worker;
 	}
 
@@ -200,8 +203,8 @@ public class TestDataGenerator {
 		double qualityRange = maxQuality - minQuality;
 		for (int i = 0; i < workerCount; i++) {
 			double quality = Math.random() * qualityRange + minQuality;
-			ArtificialWorker worker = this.generateArtificialWorker(
-					"Worker-" + i, quality, categories);
+			ArtificialWorker worker = this.generateArtificialWorker("Worker-"
+					+ i, quality, categories);
 			workers.add(worker);
 		}
 		return workers;
@@ -209,9 +212,13 @@ public class TestDataGenerator {
 
 	/**
 	 * Generates labels assigned by artificial workers.
-	 * @param workers Collection of artificial workers
-	 * @param objects Test objects collection
-	 * @param workersPerObject How many workers will assign label to same object
+	 * 
+	 * @param workers
+	 *            Collection of artificial workers
+	 * @param objects
+	 *            Test objects collection
+	 * @param workersPerObject
+	 *            How many workers will assign label to same object
 	 * @return Collection of worker assigned labels
 	 */
 	public Collection<Label> generateLabels(
@@ -224,37 +231,74 @@ public class TestDataGenerator {
 			ArtificialWorker worker;
 			for (int labelsForObject = 0; labelsForObject < workersPerObject; labelsForObject++) {
 				String assignedLabel;
-				if(!workersIterator.hasNext()){
+				if (!workersIterator.hasNext()) {
 					workersIterator = workers.iterator();
 				}
 				worker = workersIterator.next();
 				assignedLabel = worker.assignCategoryToObject(correctCat);
-				labels.add(new Label(worker.getName(),object,assignedLabel));
+				labels.add(new Label(worker.getName(), object, assignedLabel));
 			}
 		}
 		return labels;
 	}
-	
+
 	/**
 	 * Generates gold labels from collection of test objects
-	 * @param objects Test objects
-	 * @param goldCoverage Fraction of objects that will have gold label
+	 * 
+	 * @param objects
+	 *            Test objects
+	 * @param goldCoverage
+	 *            Fraction of objects that will have gold label
 	 * @return Collection of gold labels.
 	 */
-	public Collection<GoldLabel> generateGoldLabels(TestObjectCollection objects,double goldCoverage){
-		int goldCount = (int) (objects.size()*goldCoverage);
+	public Collection<GoldLabel> generateGoldLabels(
+			TestObjectCollection objects, double goldCoverage) {
+		int goldCount = (int) (objects.size() * goldCoverage);
 		Collection<GoldLabel> goldLabels = new ArrayList<GoldLabel>();
 		Iterator<String> objectsIterator = objects.iterator();
-		for(int i=0;i<goldCount;i++){
+		for (int i = 0; i < goldCount; i++) {
 			String objectName;
-			if(objectsIterator.hasNext()){
-				objectName=objectsIterator.next();
-				goldLabels.add(new GoldLabel(objectName,objects.getCategory(objectName)));
-			}else{
+			if (objectsIterator.hasNext()) {
+				objectName = objectsIterator.next();
+				goldLabels.add(new GoldLabel(objectName, objects
+						.getCategory(objectName)));
+			} else {
 				break;
 			}
 		}
 		return goldLabels;
+	}
+
+	public TestData generateTestData(String requestId,int objectCount, int categoryCount,
+			int workerCount, double minQuality, double maxQuality,
+			double goldRatio, int workersPerObject) {
+		TestData data = new TestData();
+		Collection<String> categoryNames = this
+				.generateCategoryNames(categoryCount);
+		Collection<Category> categories = CategoryFactory.getInstance()
+				.createCategories(categoryNames);
+		TestObjectCollection objects = this.generateTestObjects(objectCount,
+				categoryNames);
+		Collection<MisclassificationCost> misclassificationCost = MisclassificationCostFactory
+				.getInstance().getMisclassificationCosts(categories);
+		Collection<ArtificialWorker> workers = this.generateArtificialWorkers(
+				workerCount, categoryNames, minQuality, maxQuality);
+		Collection<Label> labels = this.generateLabels(workers, objects,
+				workersPerObject);
+		Collection<GoldLabel> goldLabels = this.generateGoldLabels(objects,
+				goldRatio);
+		Collection<String> workerNames = new ArrayList<String>();
+		for (ArtificialWorker worker : workers) {
+			workerNames.add(worker.getName());
+		}
+		data.setCategories(categories);
+		data.setGoldLabels(goldLabels);
+		data.setLabels(labels);
+		data.setMisclassificationCost(misclassificationCost);
+		data.setObjectCollection(objects);
+		data.setRequestId(requestId);
+		data.setWorkers(workerNames);
+		return data;
 	}
 
 	public static TestDataGenerator getInstance() {
@@ -266,7 +310,7 @@ public class TestDataGenerator {
 	private TestDataGenerator() {
 
 	}
-	
+
 	/**
 	 * Logger for this class
 	 */

@@ -5,7 +5,6 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.TreeMap;
 
-import main.com.dawidSkeneClient.DawidSkeneRequest;
 
 import org.apache.log4j.Logger;
 
