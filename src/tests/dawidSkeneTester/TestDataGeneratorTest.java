@@ -8,12 +8,12 @@ import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
 
 import junit.framework.TestCase;
-import main.com.dawidSkeneClient.GoldLabel;
-import main.com.dawidSkeneClient.Label;
-import main.com.dawidSkeneTester.ArtificialWorker;
-import main.com.dawidSkeneTester.ConfusionMatrix;
-import main.com.dawidSkeneTester.TestDataGenerator;
-import main.com.dawidSkeneTester.TestObjectCollection;
+import main.com.troiaClient.GoldLabel;
+import main.com.troiaClient.Label;
+import main.com.troiaTester.ArtificialWorker;
+import main.com.troiaTester.ConfusionMatrix;
+import main.com.troiaTester.TestDataGenerator;
+import main.com.troiaTester.TestObjectCollection;
 
 /**
  * The class <code>TestDataGeneratorTest</code> contains tests for the class

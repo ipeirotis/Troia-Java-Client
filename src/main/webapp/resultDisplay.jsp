@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-<%@ page import="main.com.dawidSkeneClient.*"%>
-<%@ page import="main.com.dawidSkeneTester.*"%>
+<%@ page import="main.com.troiaClient.*"%>
+<%@ page import="main.com.troiaTester.*"%>
 <%@ page import="java.util.*"%>
 
 <script type="text/javascript">
@@ -41,46 +41,46 @@
 </script>
 
 
-<%!DawidSkeneRequest dawidSkene;
+<%!TroiaRequest dawidSkene;
 	TestData data = new TestData();
 	TestDataGenerator generator = TestDataGenerator.getInstance();
 	Map<String, String> majorityVotes;
 	DawidSkeneAnalyzer analyzer;%>
 <%
 	int categoryCount = Integer.parseInt(request
-			.getParameter("categories"));
+	.getParameter("categories"));
 	int objectCount = Integer.parseInt(request
-			.getParameter("objectsCount"));
+	.getParameter("objectsCount"));
 	int workerCount = Integer.parseInt(request
-			.getParameter("workersCount"));
+	.getParameter("workersCount"));
 	double minQuality = Double.parseDouble(request
-			.getParameter("minQuality"));
+	.getParameter("minQuality"));
 	double maxQuality = Double.parseDouble(request
-			.getParameter("maxQuality"));
+	.getParameter("maxQuality"));
 	double goldRatio = Double.parseDouble(request
-			.getParameter("goldRatio"));
+	.getParameter("goldRatio"));
 	int workersPerObject = Integer.parseInt(request
-			.getParameter("workersPerObject"));
+	.getParameter("workersPerObject"));
 	int iterations = Integer.parseInt(request
-			.getParameter("iterations"));
+	.getParameter("iterations"));
 
 	//Create request
 
-	dawidSkene = new DawidSkeneRequest(request.getParameter("url"),
-			request.getParameter("requestId"), 0);
+	dawidSkene = new TroiaRequest(request.getParameter("url"),
+	request.getParameter("requestId"), 0);
 
 	Collection<String> categoryNames = generator
-			.generateCategoryNames(categoryCount);
+	.generateCategoryNames(categoryCount);
 	TestObjectCollection testObjects = generator.generateTestObjects(
-			objectCount, categoryNames);
+	objectCount, categoryNames);
 	Collection<ArtificialWorker> workers = generator
-			.generateArtificialWorkers(workerCount, categoryNames,
-					minQuality, maxQuality);
+	.generateArtificialWorkers(workerCount, categoryNames,
+			minQuality, maxQuality);
 	Collection<String> workerNames = new ArrayList<String>();
 	Collection<Category> categories = CategoryFactory.getInstance()
-			.createCategories(categoryNames);
+	.createCategories(categoryNames);
 	Collection<MisclassificationCost> msCosts = MisclassificationCostFactory
-			.getInstance().getMisclassificationCosts(categories);
+	.getInstance().getMisclassificationCosts(categories);
 
 	for (ArtificialWorker worker : workers) {
 		workerNames.add(worker.getName());
@@ -89,10 +89,10 @@
 	data.setCategories(categories);
 	data.setObjectCollection(testObjects);
 	data.setGoldLabels(generator.generateGoldLabels(testObjects,
-			goldRatio));
+	goldRatio));
 	data.setWorkers(workerNames);
 	data.setLabels(generator.generateLabels(workers, testObjects,
-			workersPerObject));
+	workersPerObject));
 	data.setMisclassificationCost(msCosts);
 
 	analyzer = new DawidSkeneAnalyzer(dawidSkene, data, iterations);

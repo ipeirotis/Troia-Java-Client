@@ -4,8 +4,8 @@ import java.util.ArrayList;
 import java.util.Collection;
 
 import junit.framework.TestCase;
-import main.com.dawidSkeneClient.Label;
-import main.com.dawidSkeneTester.DSaSStressTest;
+import main.com.troiaClient.Label;
+import main.com.troiaTester.DSaSStressTest;
 
 /**
  * The class <code>DSaSStressTestTest</code> contains tests for the class
