@@ -16,9 +16,9 @@ import main.com.troiaClient.MisclassificationCost;
 import main.com.troiaClient.MisclassificationCostFactory;
 
 /**
+ * This class is used to create test data for Troia client tests.
  * 
- * @author piotr.gnys@10clouds.com This class is used to create test data for
- *         DSaS client tests.
+ * @author piotr.gnys@10clouds.com
  */
 public class TestDataGenerator {
 
@@ -225,6 +225,8 @@ public class TestDataGenerator {
 			Collection<ArtificialWorker> workers, TestObjectCollection objects,
 			int workersPerObject) {
 		Collection<Label> labels = new ArrayList<Label>();
+		Map<ArtificialWorker, NoisedLabelGenerator> generators = NoisedLabelGeneratorFactory
+				.getInstance().getRouletteGeneratorsForWorkers(workers);
 		Iterator<ArtificialWorker> workersIterator = workers.iterator();
 		for (String object : objects) {
 			String correctCat = objects.getCategory(object);
@@ -235,7 +237,8 @@ public class TestDataGenerator {
 					workersIterator = workers.iterator();
 				}
 				worker = workersIterator.next();
-				assignedLabel = worker.assignCategoryToObject(correctCat);
+				assignedLabel = generators.get(worker).getCategoryWithNoise(
+						correctCat);
 				labels.add(new Label(worker.getName(), object, assignedLabel));
 			}
 		}
@@ -269,9 +272,9 @@ public class TestDataGenerator {
 		return goldLabels;
 	}
 
-	public TestData generateTestData(String requestId,int objectCount, int categoryCount,
-			int workerCount, double minQuality, double maxQuality,
-			double goldRatio, int workersPerObject) {
+	public TestData generateTestData(String requestId, int objectCount,
+			int categoryCount, int workerCount, double minQuality,
+			double maxQuality, double goldRatio, int workersPerObject) {
 		TestData data = new TestData();
 		Collection<String> categoryNames = this
 				.generateCategoryNames(categoryCount);

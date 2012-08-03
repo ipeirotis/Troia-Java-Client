@@ -7,7 +7,8 @@
 <title>Test data loader</title>
 </head>
 <body>
-	<form action="UploadServlet" method="post"
+	Upload file with labels
+	<form action="testFromFileResults" method="post"
 		enctype="multipart/form-data">
 		<input type="file" name="file" size="50" /> <br /> <input
 			type="submit" value="Upload File" />

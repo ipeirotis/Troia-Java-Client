@@ -17,16 +17,13 @@
 				value="http://localhost:8080/GetAnotherLabel/rest/" /><br />
 			Identifier of this request : <input type="text" name="requestId"
 				value="TestRequest" /><br /> Number of workers in simulation : <input
-				type="text" name="workersCount" value="30" /><br /> 
-				<br /> Minimal worker quality : <input
-				type="text" name="minQuality" value="0" /><br />
-				<br /> Maximal worker quality : <input
-				type="text" name="maxQuality" value="1" /><br />
-				<br /> Workers per object : <input
-				type="text" name="workersPerObject" value="9" /><br />
-				
-				Number of
-			objects for labeling in simulation : <input type="text"
+				type="text" name="workersCount" value="30" /><br /> <br />
+			Minimal worker quality : <input type="text" name="minQuality"
+				value="0" /><br /> <br /> Maximal worker quality : <input
+				type="text" name="maxQuality" value="1" /><br /> <br /> Workers
+			per object : <input type="text" name="workersPerObject" value="9" /><br />
+
+			Number of objects for labeling in simulation : <input type="text"
 				name="objectsCount" value="500" /><br /> Ratio of gold labels in
 			simulation : <input type="text" name="goldRatio" value="0.2" /><br />
 			Number of iterations to perform : <input type="text"

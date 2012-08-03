@@ -480,8 +480,11 @@ public class TroiaRequest {
 		if (params != null) {
 			String parameters = new String();
 			Collection<String> parameterNames = params.keySet();
+			String paramName,paramValue;
 			for (String name : parameterNames) {
-				parameters += "&" + name + "=" + params.get(name);
+				paramName = name.replace(' ','+');
+				paramValue = params.get(name).replace(' ','+');
+				parameters += "&" + paramName + "=" + paramValue;
 			}
 			urlStr += "?" + parameters;
 		}

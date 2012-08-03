@@ -19,9 +19,9 @@ import main.com.troiaClient.Label;
 import com.google.gson.Gson;
 
 /**
+ * Test data manager is used for managing text files containing test data.
  * 
- * @author piotr.gnys@10clouds.com Test data manager is used for managing text
- *         files containing test data.
+ * @author piotr.gnys@10clouds.com
  */
 public class TestDataManager {
 
@@ -88,9 +88,7 @@ public class TestDataManager {
 		FileOutputStream stream = new FileOutputStream(filename);
 		Writer out = new OutputStreamWriter(stream);
 		Gson gson = new Gson();
-		for (ArtificialWorker artificialWorker : workers) {
-			out.write(gson.toJson(artificialWorker) + '\n');
-		}
+		out.write(gson.toJson(workers) + '\n');
 		out.close();
 	}
 
@@ -114,14 +112,8 @@ public class TestDataManager {
 		FileInputStream stream = new FileInputStream(filename);
 		Scanner scanner = new Scanner(stream);
 		Gson gson = new Gson();
-		String line;
 		Collection<ArtificialWorker> workers = new ArrayList<ArtificialWorker>();
-		ArtificialWorker worker;
-		while (scanner.hasNextLine()) {
-			line = scanner.nextLine();
-			worker = gson.fromJson(line, ArtificialWorker.class);
-			workers.add(worker);
-		}
+		gson.fromJson(scanner.nextLine(),workers.getClass());
 		return workers;
 	}
 
@@ -193,18 +185,31 @@ public class TestDataManager {
 			throws FileNotFoundException {
 		FileInputStream stream = new FileInputStream(filename);
 		Scanner scanner = new Scanner(stream);
-		String line, objectName, objectCategory, workerName;
+		String line;
 		Collection<Label> labels = new ArrayList<Label>();
 		while (scanner.hasNextLine()) {
 			line = scanner.nextLine();
-			workerName = line.substring(0, line.indexOf('\t'));
-			objectName = line.substring(line.indexOf('\t') + 1,
-					line.lastIndexOf('\t'));
-			objectCategory = line.substring(line.lastIndexOf('\t') + 1,
-					line.length());
-			labels.add(new Label(workerName, objectName, objectCategory));
+			labels.add(this.parseLabelFromString(line));
 		}
 		return labels;
+	}
+
+	/**
+	 * Parses string formatted as
+	 * <workerName><tabulation><objectName><tabulation><categoryName> into
+	 * label.
+	 * 
+	 * @param line
+	 * @return
+	 */
+	public Label parseLabelFromString(String line) {
+		String objectName, objectCategory, workerName;
+		workerName = line.substring(0, line.indexOf('\t'));
+		objectName = line.substring(line.indexOf('\t') + 1,
+				line.lastIndexOf('\t'));
+		objectCategory = line.substring(line.lastIndexOf('\t') + 1,
+				line.length());
+		return new Label(workerName, objectName, objectCategory);
 	}
 
 	/**
@@ -246,6 +251,24 @@ public class TestDataManager {
 			goldLabels.add(new GoldLabel(objectName, objectCategory));
 		}
 		return goldLabels;
+	}
+
+	public Map<String, Double> loadCategoriesWithProbabilities(String filename)
+			throws FileNotFoundException {
+		FileInputStream stream = new FileInputStream(filename);
+		Scanner scanner = new Scanner(stream);
+		String line;
+		Map<String, Double> categories = new HashMap<String, Double>();
+		String categoryName;
+		Double categoryProbability;
+		while (scanner.hasNextLine()) {
+			line = scanner.nextLine();
+			categoryName = line.substring(0, line.indexOf('\t'));
+			categoryProbability = Double.parseDouble(line.substring(
+					line.indexOf('\t') + 1, line.length()));
+			categories.put(categoryName, categoryProbability);
+		}
+		return categories;
 	}
 
 	public void saveTestData(String filename_base, TestData data)
@@ -302,15 +325,16 @@ public class TestDataManager {
 		return categories;
 	}
 
-	public String converToJSON(TestData data){
+	public String converToJSON(TestData data) {
 		Gson gson = new Gson();
 		return gson.toJson(data);
 	}
-	
-	public TestData loadFromJSON(String jsonifiedData){
+
+	public TestData loadFromJSON(String jsonifiedData) {
 		Gson gson = new Gson();
 		return gson.fromJson(jsonifiedData, TestData.class);
 	}
+
 	/**
 	 * @return the instance
 	 */

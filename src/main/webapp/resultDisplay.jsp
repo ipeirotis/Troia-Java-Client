@@ -45,7 +45,9 @@
 	TestData data = new TestData();
 	TestDataGenerator generator = TestDataGenerator.getInstance();
 	Map<String, String> majorityVotes;
-	DawidSkeneAnalyzer analyzer;%>
+	TroiaAnalyzer analyzer;
+	AnalyzeResults results;
+	%>
 <%
 	int categoryCount = Integer.parseInt(request
 	.getParameter("categories"));
@@ -75,7 +77,7 @@
 	objectCount, categoryNames);
 	Collection<ArtificialWorker> workers = generator
 	.generateArtificialWorkers(workerCount, categoryNames,
-			minQuality, maxQuality);
+	minQuality, maxQuality);
 	Collection<String> workerNames = new ArrayList<String>();
 	Collection<Category> categories = CategoryFactory.getInstance()
 	.createCategories(categoryNames);
@@ -95,10 +97,9 @@
 	workersPerObject));
 	data.setMisclassificationCost(msCosts);
 
-	analyzer = new DawidSkeneAnalyzer(dawidSkene, data, iterations);
-	analyzer.execute();
-
-	majorityVotes = analyzer.getMajorityVotes();
+	analyzer = TroiaAnalyzer.getInstance();
+	results = analyzer.analyze(dawidSkene, data, iterations);
+	
 %>
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
@@ -158,7 +159,7 @@
 					<td>Source labels quality</td>
 					<td>
 						<%
-							out.print(analyzer.getSourceLabelQuality());
+							out.print(results.getSourceLabelQuality());
 						%>
 					</td>
 				</tr>
@@ -167,7 +168,7 @@
 					<td>Dawid Skene (majority vote) label quality</td>
 					<td>
 						<%
-							out.print(analyzer.getDawidSkeneLabelQuality());
+							out.print(results.getDawidSkeneLabelQuality());
 						%>
 					</td>
 				</tr>
@@ -177,7 +178,7 @@
 					<td>Processing time</td>
 					<td>
 						<%
-							out.print(analyzer.getProcessingTime());
+							out.print(results.getProcessingTime());
 						%>
 					</td>
 				</tr>
@@ -188,7 +189,7 @@
 		<div id="MajorityVotes">
 			<table>
 				<%
-					Collection<String> objects = majorityVotes.keySet();
+					Collection<String> objects = results.getMajorityVotes().keySet();
 					int objectNumber = 0;
 					for (String object : objects) {
 						if (objectNumber % 5 == 0) {
@@ -198,7 +199,7 @@
 						out.print(object);
 						out.print("</td>");
 						out.print("<td>");
-						out.print(majorityVotes.get(object));
+						out.print(results.getMajorityVotes().get(object));
 						out.print("</td>");
 
 						objectNumber++;

@@ -35,17 +35,7 @@ public class ArtificialWorker {
 	public void setConfusionMatrix(ConfusionMatrix confusionMatrix) {
 		this.confusionMatrix = confusionMatrix;
 	}
-	
-	/**
-	 * 
-	 * @param correctCategory Correct category of object
-	 * @return Category assigned to object by this worker
-	 */
-	public String assignCategoryToObject(String correctCategory){
-		return this.confusionMatrix.getCategoryWithNoise(correctCategory);
-	}
 
-	
 	
 	/**
 	 * @see java.lang.Object#toString()
