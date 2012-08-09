@@ -1,4 +1,4 @@
-package main.com.troiaClient;
+package troiaClient;
 
 /**
  * 

@@ -1,4 +1,4 @@
-package main.com.troiaClient;
+package troiaClient;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -540,8 +540,8 @@ public class TroiaRequest {
 			int i = 0;
 			for (String parameter : parameters) {
 				String value = params.get(parameter);
-				parameter.replace(' ', '+');
-				value.replace(' ', '+');
+				parameter = parameter.replace(' ', '+');
+				value = value.replace(' ', '+');
 				if (i != 0) {
 					data += "&";
 				}

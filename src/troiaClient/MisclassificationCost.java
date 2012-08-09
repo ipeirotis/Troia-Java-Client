@@ -1,4 +1,4 @@
-package main.com.troiaClient;
+package troiaClient;
 
 /**
  * Representation of single misclassification cost between two categories recognised
