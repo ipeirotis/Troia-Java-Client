@@ -1,0 +1,2 @@
+worker1	object1	noPorn
+worker2	object2	porn
