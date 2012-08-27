@@ -24,8 +24,6 @@
       <groupId>TroiaJavaClient</groupId>
       <artifactId>TroiaJavaClient</artifactId>
       <version>1.0</version>
-      <scope>system</scope>
-      <systemPath>${PWD}/../target/TroiaJavaClient-1.0.jar</systemPath>
     </dependency>
   </dependencies>  
 

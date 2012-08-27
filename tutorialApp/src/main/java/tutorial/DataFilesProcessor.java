@@ -25,7 +25,7 @@ public class DataFilesProcessor {
 	    line = scanner.nextLine();
 	    inputData = line.split("\t");
 	    if(inputData.length!=3){
-		throw new IOException("Incorrect file format");
+		throw new IOException("Incorrect file format \""+line+"\"");
 	    }else{
 		labels.add(new Label(inputData[0],inputData[1],inputData[3]));
 	    }
@@ -44,7 +44,7 @@ public class DataFilesProcessor {
 	    line = scanner.nextLine();
 	    inputData = line.split("\t");
 	    if(inputData.length!=2){
-		throw new IOException("Incorrect file format");
+		throw new IOException("Incorrect file format \""+line+"\"");
 	    }else{
 		labels.add(new GoldLabel(inputData[0],inputData[1]));
 	    }

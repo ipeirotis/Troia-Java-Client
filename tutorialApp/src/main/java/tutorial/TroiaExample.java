@@ -36,6 +36,9 @@ public class TroiaExample {
 	    //Creating a request for Troia
 	    TroiaRequest request = new TroiaRequest(TROIA_URL,REQUEST_NAME,TIMEOUT);
 
+	    //Checking if Troia server is at given address
+	    System.out.println(request.ping());
+
 	    //Uploading labels into Troia server
 	    request.loadLabels(labels);
 
