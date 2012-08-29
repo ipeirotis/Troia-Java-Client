@@ -39,6 +39,8 @@ public class TroiaExample {
 	    //Checking if Troia server is at given address
 	    System.out.println(request.ping());
 
+	    System.out.println(request.exists());
+
 	    //Uploading labels into Troia server
 	    request.loadLabels(labels);
 
@@ -64,7 +66,7 @@ public class TroiaExample {
 	    e.printStackTrace();
 	}catch(IOException e){
 	    //This code will be reached if connection with Troia is broken
-	    System.out.println("Unable to connect to Troia");
+	    System.out.println(e.getMessage());
 	    e.printStackTrace();
 	}
     }

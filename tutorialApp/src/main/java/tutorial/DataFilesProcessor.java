@@ -30,6 +30,7 @@ public class DataFilesProcessor {
 		labels.add(new Label(inputData[0],inputData[1],inputData[2]));
 	    }
 	}
+	System.out.println(labels);
 	    return labels;
     }
 
@@ -49,6 +50,7 @@ public class DataFilesProcessor {
 		labels.add(new GoldLabel(inputData[0],inputData[1]));
 	    }
 	}
+	System.out.println(labels);
 	    return labels;
     }
 
