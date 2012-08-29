@@ -15,6 +15,7 @@ public class ExampleMain {
 	    example.processRequest(processor.parseLabels(LABELS_FILE),processor.parseGoldLabels(GOLD_LABELS_FILE));
 	}catch(Exception e){
 	    System.out.println("Error occured : "+e.getMessage());
+	    e.printStackTrace();
 	}
     }
 }

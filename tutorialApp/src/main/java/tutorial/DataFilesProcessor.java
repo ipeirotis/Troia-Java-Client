@@ -27,7 +27,7 @@ public class DataFilesProcessor {
 	    if(inputData.length!=3){
 		throw new IOException("Incorrect file format \""+line+"\"");
 	    }else{
-		labels.add(new Label(inputData[0],inputData[1],inputData[3]));
+		labels.add(new Label(inputData[0],inputData[1],inputData[2]));
 	    }
 	}
 	    return labels;

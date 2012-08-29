@@ -21,7 +21,7 @@ public class TroiaExample {
     private static final String REQUEST_NAME = "ExampleRequest";
 
     /* URL of Troia*/
-    private static final String TROIA_URL = "localhost:8080/GetAnotherLabel";
+    private static final String TROIA_URL = "http://localhost:8080/GetAnotherLabel/rest/";
 
     /* Time after with connection with Troia server will be considered broken*/
     private static final int TIMEOUT = 1000;
@@ -61,9 +61,11 @@ public class TroiaExample {
 	}catch(MalformedURLException e){
 	    //This code will be reached if Troia service URL is malformed
 	    System.out.println("Troia URL is malformed");
+	    e.printStackTrace();
 	}catch(IOException e){
 	    //This code will be reached if connection with Troia is broken
 	    System.out.println("Unable to connect to Troia");
+	    e.printStackTrace();
 	}
     }
 
