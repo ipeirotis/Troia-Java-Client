@@ -39,8 +39,10 @@ public class TroiaExample {
 	    //Checking if Troia server is at given address
 	    System.out.println(request.ping());
 
+	    //Checking if there is already request with given name
 	    System.out.println(request.exists());
 
+	    request.loadCategories(CategoryFactory.getInstance().extractCategories(labels));
 	    //Uploading labels into Troia server
 	    request.loadLabels(labels);
 
