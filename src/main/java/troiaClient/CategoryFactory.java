@@ -42,7 +42,15 @@ public class CategoryFactory {
 	}
 	return labels;
     }
-	
+
+
+    public Collection<Category> extractCategories(Collection<Label> labels){
+	Collection<String> categoryNames = new ArrayList<String>();
+	for (Label label : labels) {
+	    categoryNames.add(label.getCategoryName());    
+	}
+	return this.createCategories(categoryNames);
+    }	
 	
 	
     /**
