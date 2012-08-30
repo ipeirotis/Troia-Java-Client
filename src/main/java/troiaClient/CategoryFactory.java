@@ -44,12 +44,32 @@ public class CategoryFactory {
     }
 
 
+    public Collection<Category> createCategories(Collection<String> labelNames,Map<String,Map<String,Double>> misclassificationMatrix){
+	Collection<Category> labels=new ArrayList<Category>();
+	for (String labelName : labelNames) {
+	    Category l = new Category(labelName,misclassificationMatrix.get(labelName));
+	    labels.add(l);
+	}
+	return labels;
+    }
+
+
+
     public Collection<Category> extractCategories(Collection<Label> labels){
 	Collection<String> categoryNames = new ArrayList<String>();
 	for (Label label : labels) {
 	    categoryNames.add(label.getCategoryName());    
 	}
 	return this.createCategories(categoryNames);
+    }	
+
+
+    public Collection<Category> extractCategories(Collection<Label> labels,Map<String,Map<String,Double>> misclassificationMatrix){
+	Collection<String> categoryNames = new ArrayList<String>();
+	for (Label label : labels) {
+	    categoryNames.add(label.getCategoryName());    
+	}
+	return this.createCategories(categoryNames,misclassificationMatrix);
     }	
 	
 	
