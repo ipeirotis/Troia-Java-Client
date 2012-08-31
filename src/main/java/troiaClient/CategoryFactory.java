@@ -32,29 +32,44 @@ public class CategoryFactory {
 	}
 	return labels;
     }
-	
-    public Collection<Category> createCategories(Collection<String> labelNames,Map<String,Double>priorities,
-						 Map<String,Map<String,Double>> misclassificationMatrix){
-	Collection<Category> labels=new ArrayList<Category>();
-	for (String labelName : labelNames) {
-	    Category l = new Category(labelName,priorities.get(labelName),misclassificationMatrix.get(labelName));
-	    labels.add(l);
+
+
+
+    /**
+     * Creates categories extracted from misclassification cost map
+     * @param missclassificationMatrix Map of misclassification costs
+     */
+    public Collection<Category> createCategories(Map<String,Map<String,Double>> misclassificationMatrix,Map<String,Double>priorities){
+	Collection<Category> categories=new ArrayList<Category>();
+	Collection<String> categoryNames = misclassificationMatrix.keySet();
+	for (String categoryName : categoryNames) {
+	    Category category = new Category(categoryName,priorities.get(categoryName),misclassificationMatrix.get(categoryName));
+	    categories.add(category);
 	}
-	return labels;
+	return categories;
+    }
+
+    /**
+     * Creates categories extracted from misclassification cost map
+     * @param missclassificationMatrix Map of misclassification costs
+     */
+    public Collection<Category> createCategories(Map<String,Map<String,Double>> misclassificationMatrix){
+	Collection<Category> categories=new ArrayList<Category>();
+	Collection<String> categoryNames = misclassificationMatrix.keySet();
+	for (String categoryName : categoryNames) {
+	    Category category = new Category(categoryName,misclassificationMatrix.get(categoryName));
+	    categories.add(category);
+	}
+	return categories;
     }
 
 
-    public Collection<Category> createCategories(Collection<String> labelNames,Map<String,Map<String,Double>> misclassificationMatrix){
-	Collection<Category> labels=new ArrayList<Category>();
-	for (String labelName : labelNames) {
-	    Category l = new Category(labelName,misclassificationMatrix.get(labelName));
-	    labels.add(l);
-	}
-	return labels;
-    }
 
-
-
+    /**
+     * This method extracts categories from collection of labels and associates
+     * default misclassification costs to them
+     * @param labels Collection of labels that will be processed
+     */
     public Collection<Category> extractCategories(Collection<Label> labels){
 	Collection<String> categoryNames = new ArrayList<String>();
 	for (Label label : labels) {
@@ -62,16 +77,6 @@ public class CategoryFactory {
 	}
 	return this.createCategories(categoryNames);
     }	
-
-
-    public Collection<Category> extractCategories(Collection<Label> labels,Map<String,Map<String,Double>> misclassificationMatrix){
-	Collection<String> categoryNames = new ArrayList<String>();
-	for (Label label : labels) {
-	    categoryNames.add(label.getCategoryName());    
-	}
-	return this.createCategories(categoryNames,misclassificationMatrix);
-    }	
-	
 	
     /**
      * @return Instance of label factory
