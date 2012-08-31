@@ -29,6 +29,9 @@ public class TroiaExample {
     /*Number of iterations that Dawid-Skene algorithm will be exacuted*/
     private static final int DS_ITERATIONS = 3;
 
+    /*If this is true then if request with this name exists on server it will be updated*/
+    private static final boolean ENABLE_UPDATE = true;
+
     /*This function contains example of Troia java client implementation */
     public void processRequest(Collection<Label> labels,Collection<GoldLabel> goldLabels){
 	try{
@@ -40,26 +43,33 @@ public class TroiaExample {
 	    System.out.println(request.ping());
 
 	    //Checking if there is already request with given name
-	    System.out.println(request.exists());
+	    if(!request.exists()&&ENABLE_UPDATE){
 
-	    request.loadCategories(CategoryFactory.getInstance().extractCategories(labels));
-	    //Uploading labels into Troia server
-	    request.loadLabels(labels);
+		/*Extracting categories from labels*/
+		Collection<Category> categories = CategoryFactory.getInstance().extractCategories(labels);
 
-	    //Uploading gold labels into Troia server
-	    request.loadGoldLabels(goldLabels);
+		//Uploading categories into Troia server
+		request.loadCategories(categories);
 
-	    //Ordering Troia server to execute Dawid-Skene algorithm give number of times
-	    request.computeBlocking(DS_ITERATIONS);
+		//Uploading labels into Troia server
+		request.loadLabels(labels);
 
-	    //Map that contains categories associated to objects by Troia
-	    Map<String,String> categories = request.majorityVotes();
+		//Uploading gold labels into Troia server
+		request.loadGoldLabels(goldLabels);
 
-	    Collection<String> categoryNames = categories.keySet();
+		//Ordering Troia server to execute Dawid-Skene algorithm give number of times
+		request.computeBlocking(DS_ITERATIONS);
 
-	    //Printing out categories associated to object by Troia
-	    for (String categoryName : categoryNames) {
-		System.out.println(categoryName+" category is "+categories.get(categoryName));
+		//Map that contains categories associated to objects by Troia
+		Map<String,String> categories = request.majorityVotes();
+
+		Collection<String> categoryNames = categories.keySet();
+
+		//Printing out categories associated to object by Troia
+		for (String categoryName : categoryNames) {
+		    System.out.println(categoryName+" category is "+categories.get(categoryName));
+		}
+
 	    }
 
 	}catch(MalformedURLException e){
