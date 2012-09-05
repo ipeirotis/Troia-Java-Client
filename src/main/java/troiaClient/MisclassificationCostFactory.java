@@ -5,9 +5,8 @@ import java.util.Collection;
 import java.util.Map;
 
 /**
- * 
- * This class is used for easy generation of MisclassificationCost object
- * basing on existing categories
+ * It's used to create MisclassificationCost basing on input of Category collection. Category 
+ * object in input must contain their misclassification maps in correct format.
  *
  * @author piotr.gnys@10clouds.com
  */

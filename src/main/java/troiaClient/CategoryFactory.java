@@ -5,9 +5,17 @@ import java.util.Collection;
 import java.util.Map;
 
 /**
- * This factory is used for creation of Category objects
- * whith their names as input. It's also possible to 
- * create categories with specified misclassification cost
+ * Allows simple creation of category class objects.
+ * The most basic way to do it is to call function createCategories with collection
+ * of String objects representing category names. This will result in creation of categories with
+ * given names an default misclassification costs. This is perfect approach if you do not need to 
+ * create nonstandard misclassification cost maps as it allows you to completely ignore this part
+ * of Troia model and simplifies it use. To be able to create more complex classification models
+ * you can simply pass another argument, this time of type Map<String,Map<String,Double>>, representing
+ * misclassification cost matrix. Correct format of this map is that first key indicates from what and second to 
+ * with category  cost is in map. So  if one will call a function costs.get("CategoryA").get("CategoryB"), where 
+ * "costs" is correctly formatted misclassification matrix, it will return cost of misclassification in situation when
+ * object that belong to CateogryA was classified as CategoryB.
  *
  * @author piotr.gnys@10clouds.com
  */

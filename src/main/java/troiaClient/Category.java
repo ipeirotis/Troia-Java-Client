@@ -5,8 +5,9 @@ import java.util.Map;
 import com.google.gson.Gson;
 
 /**
- * 
- * Class represents single label with misclassification costs map.
+ * Category contains information about category name and it misclassification cost.
+ * It also provides, as static constants, default values of misclassification costs for right
+ * and wrong classification, and default category priority. 
  * 
  * @author piotr.gnys@10clouds.com
  * 

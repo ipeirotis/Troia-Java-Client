@@ -1,8 +1,8 @@
 package troiaClient;
 
 /**
- * Representation of single misclassification cost between two categories recognised
- * by names.
+ * Cost of incorrect classification contains cost value, category from and category to.
+ * Category from holds name of category that was 
  *
  * @author piotr.gnys@10clouds.com
  */
