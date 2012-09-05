@@ -8,13 +8,17 @@ import java.util.Scanner;
 import java.util.ArrayList;
 
 /**
- * This part of code generates data from 
- * test files.
- *
- * @author piot.gnys@10clouds.com
+ * Class used for processing data files.
  */
 public class DataFilesProcessor {
-    
+
+
+    /**
+     * This function generates labels from file.
+     * File must be formatted as follows <worker><tab><object><tab><label>
+     * @param filename Name of file containing worker assigned labels.
+     * @return Collection of labels extracted from files.
+     */    
     public Collection<Label> parseLabels(String filename) throws IOException{
 	File dataFile = new File(filename);
 	Scanner scanner = new Scanner(dataFile);
@@ -28,26 +32,6 @@ public class DataFilesProcessor {
 		throw new IOException("Incorrect file format \""+line+"\"");
 	    }else{
 		labels.add(new Label(inputData[0],inputData[1],inputData[2]));
-	    }
-	}
-	System.out.println(labels);
-	    return labels;
-    }
-
-
-    public Collection<GoldLabel> parseGoldLabels(String filename) throws IOException{
-	File dataFile = new File(filename);
-	Scanner scanner = new Scanner(dataFile);
-	String line;
-	String[] inputData;
-	Collection<GoldLabel> labels = new ArrayList<GoldLabel>();
-	while(scanner.hasNextLine()){
-	    line = scanner.nextLine();
-	    inputData = line.split("\t");
-	    if(inputData.length!=2){
-		throw new IOException("Incorrect file format \""+line+"\"");
-	    }else{
-		labels.add(new GoldLabel(inputData[0],inputData[1]));
 	    }
 	}
 	System.out.println(labels);
