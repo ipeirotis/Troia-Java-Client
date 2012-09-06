@@ -60,7 +60,9 @@ public class CategoryFactory {
     public Collection<Category> extractCategories(Collection<Label> labels){
 	Collection<String> categoryNames = new ArrayList<String>();
 	for (Label label : labels) {
-	    categoryNames.add(label.getCategoryName());    
+	    if(!categoryNames.contains(label.getCategoryName())){
+		categoryNames.add(label.getCategoryName());    
+	    }
 	}
 	return this.createCategories(categoryNames);
     }	
