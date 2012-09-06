@@ -39,4 +39,24 @@ public class DataFilesProcessor {
     }
 
 
+    public Collection<GoldLabel> parseGoldLabels(String filename) throws IOException{
+	File dataFile = new File(filename);
+	Scanner scanner = new Scanner(dataFile);
+	String line;
+	String[] inputData;
+	Collection<GoldLabel> labels = new ArrayList<GoldLabel>();
+	while(scanner.hasNextLine()){
+	    line = scanner.nextLine();
+	    inputData = line.split("\t");
+	    if(inputData.length!=2){
+		throw new IOException("Incorrect file format \""+line+"\"");
+	    }else{
+		labels.add(new GoldLabel(inputData[0],inputData[1]));
+	    }
+	}
+	System.out.println(labels);
+	    return labels;
+    }
+
+
 }

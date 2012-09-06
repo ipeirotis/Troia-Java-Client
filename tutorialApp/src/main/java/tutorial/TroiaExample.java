@@ -22,7 +22,7 @@ public class TroiaExample {
     private static final boolean ENABLE_UPDATE = true;
 
     /*This function contains example of Troia java client implementation */
-    public void processRequest(Collection<Label> labels){
+    public void processRequest(Collection<Label> labels,Collection<GoldLabel> goldLabels){
 	/*Most Troia client methods may throw exception when unable to connect to 
 	 *Troia so they must be put in try block.*/
 	try{
@@ -56,6 +56,9 @@ public class TroiaExample {
 		for(Label label : labels){
 		    System.out.println(label);
 		}
+
+		request.loadGoldLabels(goldLabels);
+
 		//Ordering Troia server to execute Dawid-Skene algorithm with 
 		//3 iterations
 		request.computeBlocking(10);

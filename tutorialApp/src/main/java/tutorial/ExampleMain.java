@@ -13,7 +13,8 @@ public class ExampleMain {
 	DataFilesProcessor processor = new DataFilesProcessor();
 	TroiaExample example = new TroiaExample();
 	try{
-	    example.processRequest(processor.parseLabels("data/tutorialLabels.txt"));
+	    example.processRequest(processor.parseLabels("data/tutorialLabels.txt"),
+				   processor.parseGoldLabels("data/tutorialGoldLabels.txt"));
 	}catch(Exception e){
 	    System.out.println("Error occured : "+e.getMessage());
 	    e.printStackTrace();
