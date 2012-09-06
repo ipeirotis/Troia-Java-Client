@@ -23,9 +23,11 @@ import com.google.gson.reflect.TypeToken;
 
 
 /**
- * This class represents single request to Troia and 
- * proides functionalities that will be executed on 
- * remote Troia server.
+ * TroiaRequest is most important class in Troia client, it represents single request to service.
+ * Sometimes, especially in Troia inter works descriptions, request may be called Troia model. From client
+ * side request is identified by service URL and request ID. Request object to not contain any data besides
+ * that required for it identification, however it provides access to data stored in Troia server and enables
+ * access to it services. All methods throw IOException if connection to Troia failed.
  *
  * @author piotr.gnys@10clouds.com
  */
