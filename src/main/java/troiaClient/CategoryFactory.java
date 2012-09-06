@@ -26,6 +26,8 @@ public class CategoryFactory {
 	    for (String otherLabel : labelNames) {
 		if(!otherLabel.equalsIgnoreCase(labelName)){
 		    l.setMisclassificationCost(otherLabel, Category.DEFAULT_MISCLASSIFICATION_COST);
+		}else{
+		    l.setMisclassificationCost(otherLabel, Category.DEFAULT_CORRECT_CLASSIFICATION_COST);
 		}
 	    }
 	    labels.add(l);
@@ -67,7 +69,9 @@ public class CategoryFactory {
     public Collection<Category> extractCategories(Collection<Label> labels,Map<String,Map<String,Double>> misclassificationMatrix){
 	Collection<String> categoryNames = new ArrayList<String>();
 	for (Label label : labels) {
-	    categoryNames.add(label.getCategoryName());    
+	    if(!categoryNames.contains(label.getCategoryName())){
+		categoryNames.add(label.getCategoryName());    
+	    }
 	}
 	return this.createCategories(categoryNames,misclassificationMatrix);
     }	
