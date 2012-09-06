@@ -44,6 +44,7 @@ public class TroiaExample {
 		//Uploading categories into Troia server
 		request.loadCategories(categories);
 
+		System.out.println("Categories :");
 		for (Category category : categories) {
 		    System.out.println(category);
 		}
@@ -51,6 +52,10 @@ public class TroiaExample {
 		//Uploading labels into Troia server
 		request.loadLabels(labels);
 
+		System.out.println("Labels :");
+		for(Label label : labels){
+		    System.out.println(label);
+		}
 		//Ordering Troia server to execute Dawid-Skene algorithm with 
 		//3 iterations
 		request.computeBlocking(10);
