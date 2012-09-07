@@ -46,6 +46,11 @@ public class GoldLabel {
 	this.correctCategory = correctCategory;
     }
 
+
+    public String toString(){
+	return "Gold label associates object" + this.objectName + " to category " + this.correctCategory;
+    }
+
     /**
      * Object to with label is assigned
      */
