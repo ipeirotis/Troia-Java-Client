@@ -36,14 +36,5 @@
       </plugin>
     </plugins>
   </build>
-  <dependencies>
-    <dependency>
-      <groupId>TroiaJavaClient</groupId>
-      <artifactId>TroiaJavaClient</artifactId>
-      <version>1.0</version>
-      <scope>system</scope>
-      <systemPath>/home/regule/GitRepos/Troia-Java-Client/tutorialApp/../target/TroiaJavaClient-1.0.jar</systemPath>
-    </dependency>
-  </dependencies>
 </project>
 

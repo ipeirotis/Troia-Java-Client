@@ -30,7 +30,7 @@ public class TroiaExample {
 	    /*Crating request that will use "www.project-troia.com" as Troia server and "TurtorialRequest"
 	     *as a request identifier. Timeout for request will be 3 seconds (3000 miliseconds).
 	     *This constructor checks if url is not malformed and if it is throws a exception. */
-	    TroiaRequest request = new TroiaRequest("http://localhost:8080/GetAnotherLabel/rest/","TutorialRequest",3000);
+	    TroiaRequest request = new TroiaRequest("http://project-troia.com/api/","TutorialRequest",3000);
 
 	    //Checking if Troia server is at given address
 	    System.out.println(request.ping());
@@ -69,7 +69,7 @@ public class TroiaExample {
 		}
 
 		//Ordering Troia server to execute Dawid-Skene algorithm with 
-		//3 iterations
+		//10 iterations
 		request.computeBlocking(10);
 
 		//Map that contains categories associated to objects by Troia
@@ -77,6 +77,7 @@ public class TroiaExample {
 
 		//Printing out categories associated to object by Troia
 		System.out.println("");
+		System.out.println("Troia results :");
 		Collection<String> categoryNames = majorityVotes.keySet();
 		for (String categoryName : categoryNames) {
 		    System.out.println(categoryName+" category is "+majorityVotes.get(categoryName));
