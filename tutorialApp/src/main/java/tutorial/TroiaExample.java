@@ -44,6 +44,7 @@ public class TroiaExample {
 		//Uploading categories into Troia server
 		request.loadCategories(categories);
 
+		System.out.println("");
 		System.out.println("Categories :");
 		for (Category category : categories) {
 		    System.out.println(category);
@@ -52,6 +53,7 @@ public class TroiaExample {
 		//Uploading labels into Troia server
 		request.loadLabels(labels);
 
+		System.out.println("");
 		System.out.println("Labels :");
 		for(Label label : labels){
 		    System.out.println(label);
@@ -59,6 +61,12 @@ public class TroiaExample {
 
 		//Uploading gold labes so we can evaluate worker more efficent
 		request.loadGoldLabels(goldLabels);
+
+		System.out.println("");
+		System.out.println("Gold labels :");
+		for(GoldLabel label : goldLabels){
+		    System.out.println(label);
+		}
 
 		//Ordering Troia server to execute Dawid-Skene algorithm with 
 		//3 iterations
@@ -68,6 +76,7 @@ public class TroiaExample {
 		Map<String,String> majorityVotes = request.majorityVotes();
 
 		//Printing out categories associated to object by Troia
+		System.out.println("");
 		Collection<String> categoryNames = majorityVotes.keySet();
 		for (String categoryName : categoryNames) {
 		    System.out.println(categoryName+" category is "+majorityVotes.get(categoryName));
