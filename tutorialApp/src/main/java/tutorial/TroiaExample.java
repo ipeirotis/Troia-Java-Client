@@ -57,6 +57,7 @@ public class TroiaExample {
 		    System.out.println(label);
 		}
 
+		//Uploading gold labes so we can evaluate worker more efficent
 		request.loadGoldLabels(goldLabels);
 
 		//Ordering Troia server to execute Dawid-Skene algorithm with 

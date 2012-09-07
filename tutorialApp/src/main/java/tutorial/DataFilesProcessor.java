@@ -14,7 +14,7 @@ public class DataFilesProcessor {
 
 
     /**
-     * This function generates labels from file.
+     * This function extracts labels from file.
      * File must be formatted as follows <worker><tab><object><tab><label>
      * @param filename Name of file containing worker assigned labels.
      * @return Collection of labels extracted from files.
@@ -39,6 +39,15 @@ public class DataFilesProcessor {
     }
 
 
+
+    /**
+     * This function extracts gold labels from file.
+     * File must be formatted as follows <object><tab><category>
+     * Gold labels are objects with known correct categories, by uploading
+     * them to Troia we can achieve higher quality of resulting labels.
+     * @param filename Name of file containing gold labels.
+     * @return Collection of labels extracted from files.
+     */    
     public Collection<GoldLabel> parseGoldLabels(String filename) throws IOException{
 	File dataFile = new File(filename);
 	Scanner scanner = new Scanner(dataFile);
