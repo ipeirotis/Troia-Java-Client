@@ -48,7 +48,7 @@ public class GoldLabel {
 
 
     public String toString(){
-	return "Gold label associates object" + this.objectName + " to category " + this.correctCategory;
+	return "Gold label associates object " + this.objectName + " to category " + this.correctCategory;
     }
 
     /**
