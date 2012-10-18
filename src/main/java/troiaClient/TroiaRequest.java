@@ -371,6 +371,27 @@ public class TroiaRequest {
 
     }
 
+
+
+    /**
+     * Runs Dawid-Skene algorithm on request data and returns string that
+     * describes how many iterations were execudet and how much time it took.
+     * 
+     * @param iterations
+     *            How many Dawid-Skene iteration will be run.
+     * @return String that describes how many Dawid-Skene algorithm iteration
+     *         have been run.
+     * @throws IOException
+     *             Exception is thrown if connection to DSaS failed
+     */
+    public String compute(int iterations) throws IOException {
+	Map<String, String> params = new HashMap<String, String>();
+	params.put("id", this.requestId);
+	params.put("iterations", String.valueOf(iterations));
+	return this.makeGetRequest("computeNotBlocking", params);
+
+    }
+
     /**
      * Prepares String with summaries of all workers that participated in this
      * request. It is possible to set if summaries should be detailed or not.
