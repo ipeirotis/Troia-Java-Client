@@ -77,7 +77,23 @@ public class Label {
 			   this.getObjectName()+"\" to \""+this.getCategoryName()+"\" category";
 	}
 
-
+	/**
+	 * Retuns true if the objects are equals.
+	 * @see java.lang.Object#equals()
+	 */
+	@Override
+	public boolean equals(Object o) {
+		if (o == this) {
+			return true;
+		}
+		if (!(o instanceof Label)) {
+			return false;
+		}
+		Label l = (Label) o;
+		return workerName.equals(l.workerName) &&
+			   objectName.equals(l.objectName) &&
+			   categoryName.equals(l.categoryName);
+	}
 
 	/**
 	 * Name of worker that assigned this label
