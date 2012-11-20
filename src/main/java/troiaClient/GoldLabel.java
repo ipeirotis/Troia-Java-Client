@@ -46,9 +46,30 @@ public class GoldLabel {
 		this.correctCategory = correctCategory;
 	}
 
-
+	/**
+	 *
+	 * @see java.lang.Object#toString()
+	 */
+	@Override
 	public String toString() {
 		return "Gold label associates object " + this.objectName + " to category " + this.correctCategory;
+	}
+
+	/**
+	 *
+	 * @see java.lang.Object#equals()
+	 */
+	@Override
+	public boolean equals(Object o) {
+		if (o == this) {
+			return true;
+		}
+		if (!(o instanceof GoldLabel)) {
+			return false;
+		}
+		GoldLabel l = (GoldLabel) o;
+		return objectName.equals(l.objectName) &&
+			   correctCategory.equals(l.correctCategory);
 	}
 
 	/**

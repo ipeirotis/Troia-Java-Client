@@ -78,7 +78,7 @@ public class Label {
 	}
 
 	/**
-	 * Retuns true if the objects are equals.
+	 *
 	 * @see java.lang.Object#equals()
 	 */
 	@Override

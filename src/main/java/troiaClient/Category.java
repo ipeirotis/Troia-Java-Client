@@ -120,13 +120,6 @@ public class Category {
 	}
 
 	/**
-	 * @see java.lang.Object#toString()
-	 */
-	public String toString() {
-		return new Gson().toJson(this).toString();
-	}
-
-	/**
 	 * @return the prior
 	 */
 	public double getPrior() {
@@ -139,6 +132,33 @@ public class Category {
 	 */
 	public void setPrior(double prior) {
 		this.prior = prior;
+	}
+
+	/**
+	 * @see java.lang.Object#toString()
+	 */
+	public String toString() {
+		return new Gson().toJson(this).toString();
+	}
+
+	/**
+	 *
+	 * @see java.lang.Object#equals()
+	 */
+	@Override
+	public boolean equals(Object o) {
+		if (o == this) {
+			return true;
+		}
+		if (!(o instanceof Category)) {
+			return false;
+		}
+		Category c = (Category) o;
+		// XXX arbitrary chosen but it does not matter because numbers should
+		// be exactly the same (used in unit tests).
+		final double eps = 1E-6;
+		return name.equals(c.name) &&
+			   Math.abs(prior - c.prior) < eps;
 	}
 
 	/**

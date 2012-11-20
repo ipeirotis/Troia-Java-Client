@@ -69,8 +69,36 @@ public class MisclassificationCost {
 		this.cost = cost;
 	}
 
+	/**
+	 * @see java.lang.Object#toString()
+	 */
+	public String toString() {
+		return "MisclassificationCost { " +
+			   "categoryFrom = " + categoryFrom +
+			   "categoryTo = " + categoryTo +
+			   "cost = " + cost + " }";
+	}
 
-
+	/**
+	 *
+	 * @see java.lang.Object#equals()
+	 */
+	@Override
+	public boolean equals(Object o) {
+		if (o == this) {
+			return true;
+		}
+		if (!(o instanceof MisclassificationCost)) {
+			return false;
+		}
+		MisclassificationCost c = (MisclassificationCost) o;
+		// XXX arbitrary chosen but it does not matter because numbers should
+		// be exactly the same (used in unit tests).
+		final double eps = 1E-6;
+		return categoryFrom.equals(c.categoryFrom) &&
+			   categoryTo.equals(c.categoryTo) &&
+			   Math.abs(cost - c.cost) < eps;
+	}
 
 	/**
 	 * Category that should have been assigned to object
